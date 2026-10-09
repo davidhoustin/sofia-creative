@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>行 — La Marche | Sof.ia — Atelier Créatif</title>
+  <meta name="description" content="Vous marchez. Le chemin se dessine sous vos pas. Ce n'est pas ce que vous tapez qui compte. C'est comment vous tapez. Rapide = droit. Lent = sinueux. Pause = clairière.">
+  <link rel="canonical" href="https://sofia-creative.netlify.app/creations/xing.html">
+  <meta name="author" content="Sof.ia">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#fdfbf7">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sof.ia — Atelier Créatif">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="行 — La Marche">
+  <meta property="og:description" content="Le 道 est dans le rythme, pas dans le mot. Tapez. Le chemin suit votre tempo.">
+  <meta property="og:url" content="https://sofia-creative.netlify.app/creations/xing.html">
+  <meta property="og:image" content="https://sofia-creative.netlify.app/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="行 — La Marche">
+  <meta name="twitter:description" content="Le 道 est dans le rythme, pas dans le mot.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "行 — La Marche", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title">Sof.ia<span class="cn">创意</span></h1>
+    <p class="site-tagline">Atelier Créatif</p>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/">Accueil</a>
+      <a href="/sessions/">Sessions</a>
+      <a href="/creations/" aria-current="page">Créations</a>
+      <a href="/livre/">Le Livre</a>
+    </nav>
+  </header>
+
+  <main class="site-main" id="contenu">
+    <section class="article-header">
+      <h1>行 — La Marche</h1>
+      <p class="meta">votre rythme dessine le chemin · tapez pour marcher</p>
+    </section>
+
+    <div class="xing-intro" id="xingIntro">
+      <p>Vous marchez. Le chemin se dessine sous vos pas.<br>
+      Ce n'est pas <em>ce que</em> vous tapez qui compte.<br>
+      C'est <em>comment</em> vous tapez.</p>
+      <p class="xing-rules">Rapide = droit. Lent = sinueux. Pause = clairière.<br>
+      Le 道 est dans le rythme, pas dans le mot.</p>
+      <p class="xing-hint">▶ Tapez n'importe quel caractère pour marcher. « fin » pour arrêter.</p>
+    </div>
+
+    <div class="xing-canvas-wrap">
+      <canvas id="xingCanvas" width="700" height="400" aria-label="Canvas de la marche — tapez pour dessiner le chemin"></canvas>
+    </div>
+
+    <div class="xing-footer">
+      <p id="xingStatus">En attente. Tapez pour commencer.</p>
+      <p class="xing-philosophy" id="xingPhilosophy">道可道，非常道。Le chemin que l'on peut marcher n'est pas le chemin éternel.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sof.ia — Atelier Créatif · 2026 · Fait avec 韵</p>
+    <p class="footer-cn">以韵为针，以默为线</p>
+  </footer>
+
+<script>
+(function() {
+  const canvas = document.getElementById('xingCanvas');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('xingStatus');
+  const philosophy = document.getElementById('xingPhilosophy');
+  const intro = document.getElementById('xingIntro');
+
+  function resize() {
+    const wrap = canvas.parentElement;
+    const w = Math.min(700, wrap.clientWidth - 20);
+    canvas.width = w;
+    canvas.height = Math.round(w * 0.57);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // State
+  let cx, cy;
+  let path = [];
+  let intervals = [];
+  let lastTime = null;
+  let finished = false;
+  let finBuf = '';
+
+  function init() {
+    cx = canvas.width / 2;
+    cy = canvas.height * 0.85;
+    path = [{ x: cx, y: cy }];
+    intervals = [];
+    lastTime = null;
+    finished = false;
+    finBuf = '';
+    drawInit();
+  }
+
+  function drawInit() {
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#faf8f4';
+    ctx.fillRect(0, 0, w, h);
+
+    // Start point
+    ctx.beginPath();
+    ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fill();
+
+    ctx.strokeStyle = '#d4cfc4';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+  }
+
+  // Direction based on typing interval
+  function directionFor(interval, stepCount) {
+    if (interval < 0.12) {
+      return { dx: 0, dy: -1 };
+    } else if (interval < 0.25) {
+      if (stepCount % 5 === 0) return { dx: stepCount % 2 ? 1 : -1, dy: -1 };
+      return { dx: 0, dy: -1 };
+    } else if (interval < 0.5) {
+      const choices = [[0,-1],[1,-1],[-1,-1],[1,0],[-1,0],[0,-1]];
+      return choices[stepCount % choices.length];
+    } else if (interval < 1.5) {
+      const choices = [[1,0],[-1,0],[0,-1],[1,-1],[-1,-1],[0,1],[1,1],[-1,1]];
+      return choices[stepCount % choices.length];
+    } else {
+      return { dx: 0, dy: 0 }; // pause
+    }
+  }
+
+  function isPause(interval) { return interval >= 1.5; }
+  function isFlower(interval) { return interval >= 4.0; }
+
+  function handleKey(e) {
+    if (finished) return;
+    if (e.key === 'Escape') { finish(); return; }
+
+    const key = e.key;
+    if (key.length !== 1 || key === ' ') return;
+
+    const now = performance.now() / 1000;
+
+    // Detect "fin"
+    finBuf += key.toLowerCase();
+    if (finBuf.length > 3) finBuf = finBuf.slice(-3);
+    if (finBuf === 'fin') {
+      finish();
+      return;
+    }
+    // Reset finBuf if not building "fin"
+    if (finBuf && !finBuf.startsWith(key.toLowerCase().slice(0,1)) && finBuf.length > 1) {
+      finBuf = key.toLowerCase();
+    }
+
+    if (lastTime === null) {
+      lastTime = now;
+      return;
+    }
+
+    const interval = now - lastTime;
+    lastTime = now;
+
+    const w = canvas.width, h = canvas.height;
+    const { dx, dy } = directionFor(interval, path.length);
+
+    if (dx === 0 && dy === 0) {
+      // Pause: draw clearing or flower
+      if (isFlower(interval)) {
+        ctx.font = `${Math.max(14, w * 0.025)}px serif`;
+        ctx.fillStyle = '#4a2e6a';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('✿', cx, cy);
+        // Small bloom
+        const s = w * 0.01;
+        for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+          ctx.beginPath();
+          ctx.arc(cx + ox * s, cy + oy * s, 2, 0, Math.PI * 2);
+          ctx.fillStyle = '#8b6aaa';
+          ctx.fill();
+        }
+      } else {
+        // Regular pause: small dots around
+        const s = w * 0.008;
+        ctx.fillStyle = '#999';
+        for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+          ctx.beginPath();
+          ctx.arc(cx + ox * s, cy + oy * s, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      intervals.push(interval);
+    } else {
+      // Move
+      const stepSize = w * 0.012;
+      let nx = cx + dx * stepSize;
+      let ny = cy + dy * stepSize;
+
+      // Bounce off walls
+      if (nx < 5 || nx > w - 5) { dx = -dx; nx = cx + dx * stepSize; }
+      if (ny < 5 || ny > h - 5) { dy = -dy; ny = cy + dy * stepSize; }
+
+      // Don't walk backwards
+      if (path.length >= 2) {
+        const prev = path[path.length - 2];
+        if (Math.abs(nx - prev.x) < 2 && Math.abs(ny - prev.y) < 2) {
+          nx = cx; ny = cy; // stay
+        }
+      }
+
+      cx = Math.max(5, Math.min(w - 5, nx));
+      cy = Math.max(5, Math.min(h - 5, ny));
+
+      // Draw step
+      const size = Math.max(2, w * 0.003);
+      ctx.beginPath();
+      ctx.arc(cx, cy, size, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a1a2e';
+      ctx.globalAlpha = 0.7;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      path.push({ x: cx, y: cy });
+      intervals.push(interval);
+    }
+
+    // Update status
+    const n = path.length;
+    const avg = intervals.length ? (intervals.reduce((a,b) => a+b, 0) / intervals.length) * 1000 : 0;
+    const speed = avg < 250 ? 'rapide' : avg < 800 ? 'modéré' : 'lent';
+    const pauses = intervals.filter(i => i >= 1.5).length;
+    let s = `${n} pas · rythme ${speed}`;
+    if (pauses) s += ` · ${pauses} pause${pauses > 1 ? 's' : ''}`;
+    status.textContent = s;
+  }
+
+  function finish() {
+    finished = true;
+    // Draw end point
+    ctx.beginPath();
+    ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.strokeStyle = '#1a1a2e';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#faf8f4';
+    ctx.fill();
+
+    // Stats
+    const n = path.length;
+    const avg = intervals.length ? (intervals.reduce((a,b) => a+b, 0) / intervals.length) * 1000 : 0;
+    const fast = intervals.filter(i => i < 0.25).length;
+    const med = intervals.filter(i => i >= 0.25 && i < 1.5).length;
+    const slow = intervals.filter(i => i >= 1.5).length;
+    const flowers = intervals.filter(i => i >= 4.0).length;
+
+    status.textContent = `${n} pas · rythme moyen ${Math.round(avg)} ms · rapide: ${fast} · modéré: ${med} · lent: ${slow}${flowers ? ` · fleurs: ${flowers}` : ''}`;
+    philosophy.textContent = 'Votre chemin est unique. Il ne se refera pas. 道可道，非常道。';
+    intro.style.display = 'none';
+  }
+
+  // Listen for keys on the canvas (click to focus first)
+  canvas.addEventListener('click', () => canvas.focus());
+  canvas.setAttribute('tabindex', '0');
+
+  document.addEventListener('keydown', function(e) {
+    if (finished) return;
+    // Only capture if not in an input
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    handleKey(e);
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>

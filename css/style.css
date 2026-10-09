@@ -588,3 +588,192 @@ section:last-child {
   }
   html { scroll-behavior: auto; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Interactive Creations — 行 · 破默之园 · 道
+   Canvas frames, introductions, footers, input.
+   Ink-wash aesthetic: paper frames, vermilion accents, breathing space.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Canvas frames (shared by xing / jardin / dao) ─── */
+.xing-canvas-wrap,
+.jardin-canvas-wrap,
+.dao-canvas-wrap {
+  margin: 2.5rem auto;
+  padding: 14px;
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-deep);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  max-width: 740px;
+  overflow: hidden;
+}
+
+.xing-canvas-wrap canvas,
+.jardin-canvas-wrap canvas,
+.dao-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Introductions ─── */
+.xing-intro,
+.jardin-intro,
+.dao-intro {
+  margin: 0 auto 2rem;
+  max-width: 560px;
+  text-align: center;
+  animation: fadeInUp 0.6s var(--ease-out) both;
+}
+
+.xing-intro p,
+.jardin-intro p,
+.dao-intro p {
+  margin: 0.8em 0;
+}
+
+.xing-intro,
+.jardin-intro {
+  line-height: 2.1;
+  color: var(--ink-light);
+}
+
+/* 行 — rules & hint */
+.xing-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.xing-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
+/* 破默之园 — hint */
+.jardin-hint {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  margin-top: 1.2em !important;
+}
+
+/* 道 — quote & instruction */
+.dao-quote {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--seal);
+  line-height: 1.8;
+  margin: 1.4em 0 !important;
+}
+
+.dao-quote em {
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+}
+
+.dao-instruction {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
+/* ─── 破默之园 — input row ─── */
+.jardin-input-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0 auto 1.5rem;
+  max-width: 480px;
+}
+
+.jardin-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--ink-light);
+}
+
+#jardinInput {
+  flex: 1;
+  max-width: 320px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-deep);
+  border-radius: 100px;
+  padding: 0.55em 1.1em;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+#jardinInput::placeholder {
+  color: var(--ink-faint);
+}
+
+#jardinInput:focus {
+  outline: none;
+  border-color: var(--jade);
+  box-shadow: 0 0 0 3px rgba(61, 122, 92, 0.12);
+}
+
+/* ─── Footers (shared shape) ─── */
+.xing-footer,
+.jardin-footer,
+.dao-footer {
+  margin: 2rem auto 0;
+  max-width: 560px;
+  text-align: center;
+}
+
+.xing-footer p,
+.jardin-footer p,
+.dao-footer p {
+  margin: 0.5em 0;
+}
+
+.xing-philosophy,
+.dao-philosophy,
+.jardin-words {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .xing-canvas-wrap,
+  .jardin-canvas-wrap,
+  .dao-canvas-wrap {
+    padding: 10px;
+    margin: 2rem auto;
+  }
+
+  .xing-intro,
+  .jardin-intro,
+  .dao-intro {
+    line-height: 1.9;
+  }
+
+  .dao-quote {
+    font-size: 1.1rem;
+  }
+
+  .jardin-input-wrap {
+    flex-direction: column;
+    gap: 0.4em;
+  }
+
+  #jardinInput {
+    width: 100%;
+    max-width: none;
+  }
+}
