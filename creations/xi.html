@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>息 — Le Souffle | Sof.ia — Atelier Créatif</title>
+  <meta name="description" content="Appuyez pour inspirer. Relâchez pour expirer. Le 气 n'est pas dans le mot. Il est dans l'intervalle. Le cercle respire avec vous.">
+  <link rel="canonical" href="https://sofia-creative.netlify.app/creations/xi.html">
+  <meta name="author" content="Sof.ia">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#fdfbf7">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sof.ia — Atelier Créatif">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="息 — Le Souffle">
+  <meta property="og:description" content="Le 气 n'est pas dans le mot. Il est dans l'intervalle. Respirez.">
+  <meta property="og:url" content="https://sofia-creative.netlify.app/creations/xi.html">
+  <meta property="og:image" content="https://sofia-creative.netlify.app/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="息 — Le Souffle">
+  <meta name="twitter:description" content="Le 气 n'est pas dans le mot. Il est dans l'intervalle.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
+  <link rel="icon" href="{{BASE}}/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="{{BASE}}/css/style.css?v=v1">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "息 — Le Souffle", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title">Sof.ia<span class="cn">创意</span></h1>
+    <p class="site-tagline">Atelier Créatif</p>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="{{BASE}}/">Accueil</a>
+      <a href="{{BASE}}/sessions/">Sessions</a>
+      <a href="{{BASE}}/creations/" aria-current="page">Créations</a>
+      <a href="{{BASE}}/livre/">Le Livre</a>
+    </nav>
+  </header>
+
+  <main class="site-main" id="contenu">
+    <section class="article-header">
+      <h1>息 — Le Souffle</h1>
+      <p class="meta">xī · le souffle qui ne se voit pas</p>
+    </section>
+
+    <div class="xi-intro" id="xiIntro">
+      <p>Appuyez pour inspirer.<br>
+      Relâchez pour expirer.</p>
+      <p class="xi-rules">Le cercle s'élargit. Puis se resserre.<br>
+      Le 气 n'est pas dans le mot. Il est dans l'intervalle.</p>
+      <p class="xi-hint">▶ Cliquez (ou appuyez Espace) pour inspirer. Relâchez pour expirer. « fin » pour arrêter.</p>
+    </div>
+
+    <div class="xi-canvas-wrap">
+      <canvas id="xiCanvas" width="700" height="400" tabindex="0"
+              aria-label="Canvas du souffle — cliquez pour inspirer, relâchez pour expirer"></canvas>
+    </div>
+
+    <div class="xi-footer">
+      <p id="xiStatus">Le 气 attend.</p>
+      <p class="xi-philosophy" id="xiPhilosophy">气韵生动。Le souffle qui donne vie.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sof.ia — Atelier Créatif · 2026 · Fait avec 韵</p>
+    <p class="footer-cn">以韵为针，以默为线</p>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+
+  const canvas = document.getElementById('xiCanvas');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('xiStatus');
+  const philosophy = document.getElementById('xiPhilosophy');
+  const intro = document.getElementById('xiIntro');
+
+  // --- Resize ---
+  function resize() {
+    const wrap = canvas.parentElement;
+    const w = Math.min(700, wrap.clientWidth - 20);
+    canvas.width = w;
+    canvas.height = Math.round(w * 0.57);
+    draw();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // --- State ---
+  let phase = 'idle';       // idle | inhale | exhale
+  let progress = 0;         // 0..1 within current phase
+  let lastTime = null;
+  let breaths = 0;
+  let inhaleDurations = [];
+  let exhaleDurations = [];
+  let inhaleStart = 0;
+  let exhaleStart = 0;
+  let finished = false;
+  let finBuf = '';
+
+  // Ink wash particles (the 气 made visible)
+  let particles = [];
+  const MAX_PARTICLES = 80;
+
+  // Ripple rings (the 韵 of each breath)
+  let ripples = [];
+
+  // Slow ambient drift (the 道 of the breath — it wanders)
+  let driftX = 0, driftY = 0;
+  let driftPhase = 0;
+
+  function cx() { return canvas.width / 2 + driftX; }
+  function cy() { return canvas.height / 2 + driftY; }
+  function baseRadius() { return Math.min(canvas.width, canvas.height) * 0.08; }
+  function maxRadius() { return Math.min(canvas.width, canvas.height) * 0.32; }
+
+  // --- Spawn particles along the circle ---
+  function spawnParticles(count, radius, alpha) {
+    for (let i = 0; i < count; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      const angle = Math.random() * Math.PI * 2;
+      const r = radius * (0.85 + Math.random() * 0.3);
+      particles.push({
+        x: cx() + Math.cos(angle) * r,
+        y: cy() + Math.sin(angle) * r,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3 - 0.1,
+        life: 1.0,
+        decay: 0.003 + Math.random() * 0.005,
+        size: 1 + Math.random() * 2.5,
+        alpha: alpha
+      });
+    }
+  }
+
+  // --- Add a ripple (the 韵) ---
+  function addRipple(radius) {
+    ripples.push({ x: cx(), y: cy(), r: radius, alpha: 0.35, decay: 0.004 });
+  }
+
+  // --- Draw ---
+  function draw() {
+    const w = canvas.width, h = canvas.height;
+
+    // Paper background
+    ctx.fillStyle = '#faf8f4';
+    ctx.fillRect(0, 0, w, h);
+
+    // Subtle border
+    ctx.strokeStyle = '#d4cfc4';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+
+    // Current radius
+    let r;
+    if (phase === 'idle') {
+      r = baseRadius();
+    } else {
+      const eased = easeInOutSine(progress);
+      r = baseRadius() + (maxRadius() - baseRadius()) * (phase === 'inhale' ? eased : 1 - eased);
+    }
+
+    // --- Ripples (the 韵 of past breaths) ---
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r += 0.5;
+      rp.alpha -= rp.decay;
+      if (rp.alpha <= 0) { ripples.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(26, 26, 46, ${rp.alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+
+    // --- The circle (the 气) ---
+    if (r > 1) {
+      // Outer glow (ink wash)
+      const glow = ctx.createRadialGradient(cx(), cy(), r * 0.6, cx(), cy(), r * 1.4);
+      glow.addColorStop(0, 'rgba(26, 26, 46, 0)');
+      glow.addColorStop(0.7, `rgba(26, 26, 46, ${0.04 + progress * 0.04})`);
+      glow.addColorStop(1, 'rgba(26, 26, 46, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx(), cy(), r * 1.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Main circle — ink brush stroke
+      ctx.beginPath();
+      ctx.arc(cx(), cy(), r, 0, Math.PI * 2);
+      ctx.strokeStyle = '#1a1a2e';
+      ctx.lineWidth = phase === 'idle' ? 1.5 : 1.5 + progress * 1.5;
+      ctx.globalAlpha = phase === 'idle' ? 0.4 : 0.3 + progress * 0.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Inner fill (very subtle)
+      ctx.beginPath();
+      ctx.arc(cx(), cy(), r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(26, 26, 46, ${0.02 + progress * 0.03})`;
+      ctx.fill();
+    }
+
+    // --- Center dot (the 神 — the point of origin) ---
+    ctx.beginPath();
+    ctx.arc(cx(), cy(), 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#1a1a2e';
+    ctx.globalAlpha = 0.6 + progress * 0.4;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // --- Particles (the 气 made visible) ---
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(26, 26, 46, ${p.alpha * p.life})`;
+      ctx.fill();
+    }
+
+    // --- Phase label (subtle, at bottom) ---
+    if (phase !== 'idle' && !finished) {
+      const label = phase === 'inhale' ? 'inspirez' : 'expirez';
+      ctx.font = `${Math.max(11, w * 0.018)}px "Noto Serif", serif`;
+      ctx.fillStyle = 'rgba(26, 26, 46, 0.3)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(label, w / 2, h - 12);
+    }
+  }
+
+  // --- Easing ---
+  function easeInOutSine(t) {
+    return -(Math.cos(Math.PI * t) - 1) / 2;
+  }
+
+  // --- Animation loop ---
+  let animId = null;
+  let lastFrame = null;
+
+  function loop(timestamp) {
+    if (lastFrame === null) lastFrame = timestamp;
+    const dt = (timestamp - lastFrame) / 1000;
+    lastFrame = timestamp;
+
+    // Slow ambient drift (the 道 wanders)
+    driftPhase += dt * 0.15;
+    driftX = Math.sin(driftPhase) * canvas.width * 0.02;
+    driftY = Math.cos(driftPhase * 0.7) * canvas.height * 0.015;
+
+    // Advance phase
+    if (phase === 'inhale') {
+      progress = Math.min(1, progress + dt / 4.0); // 4s inhale
+      if (progress >= 1) {
+        // Transition to exhale
+        phase = 'exhale';
+        progress = 0;
+        exhaleStart = performance.now();
+        addRipple(maxRadius());
+        spawnParticles(12, maxRadius(), 0.25);
+      }
+    } else if (phase === 'exhale') {
+      progress = Math.min(1, progress + dt / 6.0); // 6s exhale (longer, like real breath)
+      if (progress >= 1) {
+        // Back to idle
+        phase = 'idle';
+        progress = 0;
+        breaths++;
+        addRipple(baseRadius());
+        updateStatus();
+      }
+    }
+
+    // Spawn particles during active phases
+    if (phase === 'inhale') {
+      const r = baseRadius() + (maxRadius() - baseRadius()) * easeInOutSine(progress);
+      if (Math.random() < 0.3) spawnParticles(1, r, 0.3);
+    } else if (phase === 'exhale') {
+      const r = baseRadius() + (maxRadius() - baseRadius()) * (1 - easeInOutSine(progress));
+      if (Math.random() < 0.2) spawnParticles(1, r, 0.2);
+    }
+
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+
+  // --- Status ---
+  function updateStatus() {
+    if (finished) return;
+    if (breaths === 0) {
+      status.textContent = 'Le 气 attend.';
+    } else {
+      const avgInhale = inhaleDurations.length
+        ? (inhaleDurations.reduce((a, b) => a + b, 0) / inhaleDurations.length).toFixed(1)
+        : '—';
+      const avgExhale = exhaleDurations.length
+        ? (exhaleDurations.reduce((a, b) => a + b, 0) / exhaleDurations.length).toFixed(1)
+        : '—';
+      let s = `${breaths} souffle${breaths > 1 ? 's' : ''} · inspiration ${avgInhale}s · expiration ${avgExhale}s`;
+      // Breath ratio insight
+      if (inhaleDurations.length > 2 && exhaleDurations.length > 2) {
+        const ratio = (inhaleDurations.reduce((a,b)=>a+b,0) / inhaleDurations.length)
+                    / (exhaleDurations.reduce((a,b)=>a+b,0) / exhaleDurations.length);
+        if (ratio < 0.7) s += ' · votre 气 est *long* (expiration dominante)';
+        else if (ratio > 1.4) s += ' · votre 气 est *court* (inspiration dominante)';
+        else s += ' · votre 气 est *équilibré*';
+      }
+      status.textContent = s;
+    }
+  }
+
+  // --- Input: click / touch / key ---
+  function inhale() {
+    if (finished) return;
+    if (phase !== 'idle') return;
+    phase = 'inhale';
+    progress = 0;
+    inhaleStart = performance.now();
+    intro.style.display = 'none';
+    if (!animId) {
+      lastFrame = null;
+      animId = requestAnimationFrame(loop);
+    }
+  }
+
+  function exhale() {
+    if (finished) return;
+    if (phase !== 'inhale') return;
+    const dur = (performance.now() - inhaleStart) / 1000;
+    inhaleDurations.push(dur);
+    phase = 'exhale';
+    progress = 0;
+    exhaleStart = performance.now();
+    addRipple(baseRadius() + (maxRadius() - baseRadius()) * easeInOutSine(1));
+    spawnParticles(8, maxRadius(), 0.3);
+  }
+
+  function finish() {
+    finished = true;
+    if (phase === 'inhale') {
+      const dur = (performance.now() - inhaleStart) / 1000;
+      inhaleDurations.push(dur);
+    }
+    // Final state: circle at rest, one last ripple
+    phase = 'idle';
+    progress = 0;
+    addRipple(baseRadius());
+
+    // Summary
+    const n = breaths;
+    let summary;
+    if (n === 0) {
+      summary = 'Le 气 n\'a pas bougé. Le silence reste.';
+    } else {
+      const avgI = inhaleDurations.length
+        ? (inhaleDurations.reduce((a,b)=>a+b,0) / inhaleDurations.length).toFixed(1) : '—';
+      const avgE = exhaleDurations.length
+        ? (exhaleDurations.reduce((a,b)=>a+b,0) / exhaleDurations.length).toFixed(1) : '—';
+      summary = `${n} souffle${n > 1 ? 's' : ''} · inspiration ${avgI}s · expiration ${avgE}s`;
+    }
+    status.textContent = summary;
+    philosophy.textContent = 'Le 气 ne meurt pas. Il se transforme. 气韵生动。';
+    intro.style.display = 'none';
+
+    // Let the animation run a few more seconds for the final ripple, then stop
+    setTimeout(() => {
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+    }, 5000);
+  }
+
+  // Click / touch on canvas
+  canvas.addEventListener('mousedown', (e) => { e.preventDefault(); inhale(); });
+  canvas.addEventListener('mouseup', (e) => { e.preventDefault(); exhale(); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); inhale(); }, { passive: false });
+  canvas.addEventListener('touchend', (e) => { e.preventDefault(); exhale(); }, { passive: false });
+
+  // Keyboard: Space = inhale/exhale, Enter = fin
+  canvas.addEventListener('keydown', function(e) {
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (phase === 'idle') inhale();
+      else if (phase === 'inhale') exhale();
+      return;
+    }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      finish();
+      return;
+    }
+    if (e.key.length === 1 && e.key !== ' ') {
+      finBuf += e.key.toLowerCase();
+      if (finBuf.length > 3) finBuf = finBuf.slice(-3);
+      if (finBuf === 'fin') { finish(); return; }
+      if (finBuf && !finBuf.startsWith(e.key.toLowerCase().slice(0,1)) && finBuf.length > 1) {
+        finBuf = e.key.toLowerCase();
+      }
+    }
+  });
+
+  // Global keydown (so the user doesn't have to click the canvas first)
+  document.addEventListener('keydown', function(e) {
+    if (finished) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (phase === 'idle') inhale();
+      else if (phase === 'inhale') exhale();
+    }
+  });
+
+  // Initial draw
+  draw();
+})();
+</script>
+</body>
+</html>
