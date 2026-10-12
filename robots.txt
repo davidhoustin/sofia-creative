@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://davidhoustin.github.io/sofia-creative/sitemap.xml
+Sitemap: https://sofia-creative.netlify.app/sitemap.xml
