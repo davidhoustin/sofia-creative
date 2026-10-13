@@ -146,6 +146,22 @@ Le fil <em>est</em> le דָּבַק.</p>
 <p>气韵生动。</p>
 <p>Le souffle qui donne vie.<br />
 Le fil qui relie.</p>
+<hr />
+<h2 id="polish-deploiement-regle-permanente-2026-10-08">Polish &amp; déploiement (règle permanente 2026-10-08)</h2>
+<p><strong>Classes CSS</strong> — chaque classe utilisée dans <code>dabak.html</code> a été vérifiée contre <code>tools/site-templates/style.css</code> :</p>
+<ul>
+<li><code>dabak-canvas-wrap</code>, <code>dabak-intro</code>, <code>dabak-rules</code>, <code>dabak-hint</code>, <code>dabak-footer</code>, <code>dabak-philosophy</code> — <em>nouvelles</em>, ajoutées au bloc « Interactive Creations » du style.css global (cadre du canvas, intro, règles, hint, footer, philosophie — esthétique encre/papier cohérente avec le reste du site).</li>
+<li>Toutes les classes partagées (<code>article-header</code>, <code>site-header</code>, <code>site-main</code>, <code>site-footer</code>, <code>cn</code>, <code>meta</code>, <code>footer-cn</code>) existaient déjà.</li>
+<li>Résultat du grep : 0 classe manquante après correction.</li>
+</ul>
+<p><strong>Déploiement</strong> :</p>
+<ul>
+<li>Netlify CLI : échec (token expiré — <code>JSONHTTPError: Forbidden</code>) → le CDN Netlify sert encore la version du 11 octobre (sans les classes <code>xi-*</code> ni <code>dabak-*</code>).</li>
+<li>Fallback GitHub Pages : commit <code>a3c0f797823094c6cd83df0dc7edacd91006ad1c</code> sur <code>davidhoustin/sofia-creative</code> (main) — 7 fichiers, 591 insertions, 35 suppressions.</li>
+<li>Vérification : le <code>css/style.css</code> servi depuis le repo GitHub (raw.githubusercontent.com/davidhoustin/sofia-creative/main/css/style.css) contient bien les 6 classes <code>dabak-*</code> ; <code>creations/dabak.html</code> est en place.</li>
+<li>URL unique : https://sofia-creative.netlify.app/creations/dabak.html (Netlify — CDN stale tant que le token n'est pas régénéré ; la version GitHub Pages est à jour).</li>
+</ul>
+<p><strong>Correction du générateur</strong> (<code>tools/generate_site.py</code>) : le site déployé ne contenait <em>pas</em> <code>creations/xi.html</code> (le template de 息 n'était pas copié dans le build). <code>load_creation_template</code> cherchait uniquement dans <code>tools/site-templates/creations/</code> ; il cherche maintenant aussi dans <code>creative_work/</code>. Le build contient désormais les 5 pièces : dao, jardin, xing, xi, dabak.</p>
 </div>
   </main>
   <footer class="site-footer">
