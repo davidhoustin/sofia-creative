@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>דָּבַק — L'Attache | Sof.ia — Atelier Créatif</title>
+  <meta name="description" content="Tapez un mot. Il s'attache au mot précédent. La racine דָּבַק — s'accrocher, coller, adhérer. Le mot ne meurt pas : il rejoint le mot.">
+  <link rel="canonical" href="https://sofia-creative.netlify.app/creations/dabak.html">
+  <meta name="author" content="Sof.ia">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#fdfbf7">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sof.ia — Atelier Créatif">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="דָּבַק — L'Attache">
+  <meta property="og:description" content="Tapez un mot. Il s'attache au mot précédent. Le mot ne meurt pas : il rejoint le mot.">
+  <meta property="og:url" content="https://sofia-creative.netlify.app/creations/dabak.html">
+  <meta property="og:image" content="https://sofia-creative.netlify.app/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="דָּבַק — L'Attache">
+  <meta name="twitter:description" content="Le mot ne meurt pas : il rejoint le mot.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=v1">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "דָּבַק — L'Attache", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title">Sof.ia<span class="cn">创意</span></h1>
+    <p class="site-tagline">Atelier Créatif</p>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/">Accueil</a>
+      <a href="/sessions/">Sessions</a>
+      <a href="/creations/" aria-current="page">Créations</a>
+      <a href="/livre/">Le Livre</a>
+    </nav>
+  </header>
+
+  <main class="site-main" id="contenu">
+    <section class="article-header">
+      <h1>דָּבַק — L'Attache</h1>
+      <p class="meta">dāvaq · s'accrocher, coller, adhérer · Genèse 2:24</p>
+    </section>
+
+    <div class="dabak-intro" id="dabakIntro">
+      <p>Tapez un mot.<br>
+      Il s'attache au mot précédent.<br>
+      <em>Le mot ne meurt pas : il rejoint le mot.</em></p>
+      <p class="dabak-rules">Un mot = un nœud. Un nœud = un fil.<br>
+      Espace = un fil plus long. Retour = un fil qui revient.</p>
+      <p class="dabak-hint">▶ Tapez pour écrire. « fin » pour arrêter.</p>
+    </div>
+
+    <div class="dabak-canvas-wrap">
+      <canvas id="dabakCanvas" width="700" height="400" tabindex="0"
+              aria-label="Canvas de l'attache — tapez pour écrire, les mots s'attachent les uns aux autres"></canvas>
+    </div>
+
+    <div class="dabak-footer">
+      <p id="dabakStatus">Le papier attend.</p>
+      <p class="dabak-philosophy" id="dabakPhilosophy">« Ils deviendront une seule chair. » — Genèse 2:24</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sof.ia — Atelier Créatif · 2026 · Fait avec 韵</p>
+    <p class="footer-cn">以韵为针，以默为线</p>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+
+  const canvas = document.getElementById('dabakCanvas');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('dabakStatus');
+  const philosophy = document.getElementById('dabakPhilosophy');
+  const intro = document.getElementById('dabakIntro');
+
+  // --- Responsive canvas ---
+  function resize() {
+    const wrap = canvas.parentElement;
+    const w = Math.min(700, wrap.clientWidth - 20);
+    canvas.width = w;
+    canvas.height = Math.round(w * 0.57);
+    draw();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // --- State ---
+  let words = [];      // {text, x, y, size}
+  let current = '';    // word being typed
+  let cursor = { x: 0, y: 0 };
+  let lastWordEnd = null; // {x, y} where previous word ended
+  let lastWordLastChar = null; // {x, y} of last char of previous word
+  let lastSpace = null; // {x, y} where the last space was
+  let lastCharPos = null; // {x, y} of the last typed char
+  let finished = false;
+  let finBuf = '';
+  let animId = null;
+  let lastFrame = null;
+
+  const INK = '#1a1a2e';
+  const INK_FAINT = 'rgba(26, 26, 46, 0.55)';
+  const THREAD = 'rgba(184, 58, 42, 0.5)'; // vermilion thread
+  const THREAD_FAINT = 'rgba(184, 58, 42, 0.28)';
+  const PAPER = '#faf8f4';
+
+  function baseSize() { return Math.max(13, Math.min(canvas.width, canvas.height) * 0.045); }
+
+  function setFont(size) {
+    ctx.font = `${size}px 'Noto Serif', 'Source Han Serif SC', 'Songti SC', Georgia, serif`;
+  }
+
+  function textW(t, size) {
+    setFont(size);
+    return ctx.measureText(t).width;
+  }
+
+  // --- Layout: place a word below the last word, with a vermilion thread ---
+  function placeWord(text) {
+    const size = baseSize();
+    const w = textW(text, size);
+    const h = size * 1.2;
+    const w2 = canvas.width, h2 = canvas.height;
+
+    let x, y;
+    if (lastWordEnd) {
+      // Start below the previous word, drift horizontally to wander (the 道 of the text)
+      const drift = (Math.random() - 0.5) * w2 * 0.18;
+      x = Math.max(12, Math.min(w2 - w - 12, lastWordEnd.x - w / 2 + drift));
+      y = lastWordEnd.y + h * 1.55;
+    } else {
+      x = (w2 - w) / 2;
+      y = h2 * 0.12;
+    }
+
+    // If we ran off the bottom, the text turns back: a new column, from the top
+    if (y + h > h2 - 10) {
+      const colW = w2 * 0.32;
+      const cols = Math.max(1, Math.floor(w2 / colW));
+      const idx = words.length % cols;
+      x = 12 + idx * colW + (colW - w) / 2;
+      y = h2 * 0.1 + (Math.floor(words.length / cols) % 3) * h * 1.6;
+    }
+
+    const word = { text, x, y, size, w, h };
+    words.push(word);
+    lastWordEnd = { x: x + w, y: y + h * 0.5 };
+    lastWordLastChar = { x: x + w, y: y + h * 0.8 };
+    lastSpace = null;
+    return word;
+  }
+
+  // --- Draw everything (no rAF needed — redraw on each event) ---
+  function draw() {
+    const w = canvas.width, h = canvas.height;
+    ctx.fillStyle = PAPER;
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#d4cfc4';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+
+    // Threads between consecutive words (the 韵 of the chain)
+    for (let i = 1; i < words.length; i++) {
+      const a = words[i - 1], b = words[i];
+      const ax = a.x + a.w, ay = a.y + a.h * 0.5;
+      const bx = b.x + b.w / 2, by = b.y;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.bezierCurveTo(ax + 6, ay + 8, bx - 6, by - 8, bx, by);
+      ctx.strokeStyle = i % 2 ? THREAD : THREAD_FAINT;
+      ctx.lineWidth = i % 2 ? 1.1 : 0.7;
+      ctx.stroke();
+    }
+
+    // Words
+    for (const wd of words) {
+      ctx.font = `${wd.size}px 'Noto Serif', 'Source Han Serif SC', 'Songti SC', Georgia, serif`;
+      ctx.fillStyle = INK;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText(wd.text, wd.x, wd.y);
+    }
+
+    // The word being typed (faint ink, a cursor beside it)
+    if (current && !finished) {
+      const size = baseSize();
+      const cw = textW(current, size);
+      let cx2, cy2;
+      if (lastCharPos) { cx2 = lastCharPos.x + 2; cy2 = lastCharPos.y - size * 0.8; }
+      else if (lastWordLastChar) { cx2 = lastWordLastChar.x + 4; cy2 = lastWordLastChar.y - size * 0.3; }
+      else { cx2 = (w - cw) / 2; cy2 = h * 0.12; }
+      if (cx2 + cw > w - 8) { cx2 = Math.max(8, w - cw - 8); cy2 = h * 0.12; }
+      setFont(size);
+      ctx.fillStyle = INK_FAINT;
+      ctx.fillText(current, cx2, cy2);
+      // blinking cursor
+      if (Math.floor(performance.now() / 500) % 2 === 0) {
+        ctx.fillStyle = INK;
+        ctx.fillRect(cx2 + cw + 3, cy2 + 2, 1.5, size * 1.05);
+      }
+    }
+
+    // Empty paper: a faint seed word
+    if (!words.length && !current) {
+      const size = baseSize() * 1.15;
+      setFont(size);
+      ctx.fillStyle = 'rgba(138, 126, 116, 0.5)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const seed = 'Tapez un mot…';
+      ctx.fillText(seed, w / 2, h / 2);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  // --- Input ---
+  function commitWord() {
+    if (!current) return;
+    const text = current;
+    current = '';
+    placeWord(text);
+    lastCharPos = null;
+    updateStatus();
+    draw();
+  }
+
+  function updateStatus() {
+    const n = words.length;
+    if (!n) { status.textContent = 'Le papier attend.'; return; }
+    const last = words[n - 1].text;
+    let s = `${n} mot${n > 1 ? 's' : ''} attaché${n > 1 ? 's' : ''} · dernier : « ${last} »`;
+    status.textContent = s;
+  }
+
+  function handleKey(e) {
+    if (finished) return;
+    if (e.key === 'Escape') { finish(); return; }
+
+    const key = e.key;
+
+    if (key === 'Backspace') {
+      if (current) {
+        current = current.slice(0, -1);
+        lastCharPos = null;
+      } else if (words.length) {
+        words.pop();
+        if (words.length) {
+          const a = words[words.length - 1];
+          lastWordEnd = { x: a.x + a.w, y: a.y + a.h * 0.5 };
+          lastWordLastChar = { x: a.x + a.w, y: a.y + a.h * 0.8 };
+        } else {
+          lastWordEnd = null;
+          lastWordLastChar = null;
+        }
+      }
+      updateStatus();
+      draw();
+      return;
+    }
+
+    if (key === ' ') {
+      // a space = a longer thread, then the next word begins
+      if (current) commitWord();
+      lastSpace = { x: lastWordEnd ? lastWordEnd.x + 20 : 0, y: lastWordEnd ? lastWordEnd.y : 0 };
+      e.preventDefault();
+      draw();
+      return;
+    }
+
+    if (key === 'Enter') { finish(); return; }
+
+    if (key.length === 1) {
+      finBuf += key.toLowerCase();
+      if (finBuf.length > 3) finBuf = finBuf.slice(-3);
+      if (finBuf === 'fin') { commitWord(); finish(); return; }
+      if (finBuf && !finBuf.startsWith(key.toLowerCase()) && finBuf.length > 1) {
+        finBuf = key.toLowerCase();
+      }
+      current += key;
+      // track the last char for the in-progress word
+      const size = baseSize();
+      const cw = textW(current, size);
+      if (lastCharPos) lastCharPos.x += textW(key, size);
+      else if (lastWordLastChar) lastCharPos = { x: lastWordLastChar.x + 4 + textW(key, size), y: lastWordLastChar.y };
+      else lastCharPos = { x: (canvas.width - cw) / 2 + textW(key, size), y: canvas.height * 0.12 + size * 0.8 };
+      if (lastSpace && !lastWordLastChar) lastCharPos = { x: lastSpace.x + textW(current, size), y: lastSpace.y };
+      updateStatus();
+      draw();
+    }
+  }
+
+  function finish() {
+    finished = true;
+    if (current) commitWord();
+    const n = words.length;
+    if (n) {
+      const last = words[n - 1].text;
+      status.textContent = `${n} mot${n > 1 ? 's' : ''} · le dernier est « ${last} » · le fil ne se rompt pas.`;
+    } else {
+      status.textContent = 'Le papier est resté vide. Le 默 reste.';
+    }
+    philosophy.textContent = 'Le mot ne meurt pas. Il rejoint le mot. דָּבַק。';
+    intro.style.display = 'none';
+    draw();
+  }
+
+  // Click to focus
+  canvas.addEventListener('click', () => canvas.focus());
+
+  // Global keydown (no need to click first)
+  document.addEventListener('keydown', function(e) {
+    if (finished) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    handleKey(e);
+  });
+
+  // Also let the canvas receive keys directly
+  canvas.addEventListener('keydown', function(e) {
+    if (finished) return;
+    handleKey(e);
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>
