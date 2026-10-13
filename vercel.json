@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/sessions", "destination": "/sessions/index.html" },
+    { "source": "/sessions/:slug", "destination": "/sessions/:slug.html" },
+    { "source": "/creations", "destination": "/creations/index.html" },
+    { "source": "/creations/:slug", "destination": "/creations/:slug.html" },
+    { "source": "/meditations", "destination": "/meditations/index.html" },
+    { "source": "/meditations/:slug", "destination": "/meditations/:slug.html" },
+    { "source": "/livre", "destination": "/livre/index.html" },
+    { "source": "/livre/:slug", "destination": "/livre/:slug.html" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}
