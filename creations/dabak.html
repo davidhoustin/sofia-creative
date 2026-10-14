@@ -82,7 +82,18 @@
   const philosophy = document.getElementById('dabakPhilosophy');
   const intro = document.getElementById('dabakIntro');
 
-  // --- State (declared before resize so draw() can access them) ---
+  // --- Responsive canvas ---
+  function resize() {
+    const wrap = canvas.parentElement;
+    const w = Math.min(700, wrap.clientWidth - 20);
+    canvas.width = w;
+    canvas.height = Math.round(w * 0.57);
+    draw();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // --- State ---
   let words = [];      // {text, x, y, size}
   let current = '';    // word being typed
   let cursor = { x: 0, y: 0 };
@@ -100,17 +111,6 @@
   const THREAD = 'rgba(184, 58, 42, 0.5)'; // vermilion thread
   const THREAD_FAINT = 'rgba(184, 58, 42, 0.28)';
   const PAPER = '#faf8f4';
-
-  // --- Responsive canvas ---
-  function resize() {
-    const wrap = canvas.parentElement;
-    const w = Math.min(700, wrap.clientWidth - 20);
-    canvas.width = w;
-    canvas.height = Math.round(w * 0.57);
-    draw();
-  }
-  resize();
-  window.addEventListener('resize', resize);
 
   function baseSize() { return Math.max(13, Math.min(canvas.width, canvas.height) * 0.045); }
 

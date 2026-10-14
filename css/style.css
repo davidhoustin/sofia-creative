@@ -590,17 +590,18 @@ section:last-child {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Interactive Creations — 行 · 破默之园 · 道 · 息 · דָּבַק
+   Interactive Creations — 行 · 破默之园 · 道 · 息 · דָּבַק · Ἐν
    Canvas frames, introductions, footers, input.
    Ink-wash aesthetic: paper frames, vermilion accents, breathing space.
    ═══════════════════════════════════════════════════════════════ */
 
-/* ─── Canvas frames (shared by xing / jardin / dao / xi) ─── */
+/* ─── Canvas frames (shared by xing / jardin / dao / xi / dabak / mono) ─── */
 .xing-canvas-wrap,
 .jardin-canvas-wrap,
 .dao-canvas-wrap,
 .xi-canvas-wrap,
-.dabak-canvas-wrap {
+.dabak-canvas-wrap,
+.mono-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -615,7 +616,8 @@ section:last-child {
 .jardin-canvas-wrap canvas,
 .dao-canvas-wrap canvas,
 .xi-canvas-wrap canvas,
-.dabak-canvas-wrap canvas {
+.dabak-canvas-wrap canvas,
+.mono-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -628,7 +630,8 @@ section:last-child {
 .jardin-intro,
 .dao-intro,
 .xi-intro,
-.dabak-intro {
+.dabak-intro,
+.mono-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -639,14 +642,16 @@ section:last-child {
 .jardin-intro p,
 .dao-intro p,
 .xi-intro p,
-.dabak-intro p {
+.dabak-intro p,
+.mono-intro p {
   margin: 0.8em 0;
 }
 
 .xing-intro,
 .jardin-intro,
 .xi-intro,
-.dabak-intro {
+.dabak-intro,
+.mono-intro {
   line-height: 2.1;
   color: var(--ink-light);
 }
@@ -762,12 +767,27 @@ section:last-child {
   margin-top: 1.5em !important;
 }
 
+/* ─── Ἐν — rules & hint ─── */
+.mono-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.mono-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
 /* ─── Footers (shared shape) ─── */
 .xing-footer,
 .jardin-footer,
 .dao-footer,
 .xi-footer,
-.dabak-footer {
+.dabak-footer,
+.mono-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -777,7 +797,8 @@ section:last-child {
 .jardin-footer p,
 .dao-footer p,
 .xi-footer p,
-.dabak-footer p {
+.dabak-footer p,
+.mono-footer p {
   margin: 0.5em 0;
 }
 
@@ -785,7 +806,8 @@ section:last-child {
 .dao-philosophy,
 .jardin-words,
 .xi-philosophy,
-.dabak-philosophy {
+.dabak-philosophy,
+.mono-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -798,7 +820,8 @@ section:last-child {
   .jardin-canvas-wrap,
   .dao-canvas-wrap,
   .xi-canvas-wrap,
-  .dabak-canvas-wrap {
+  .dabak-canvas-wrap,
+  .mono-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -807,7 +830,8 @@ section:last-child {
   .jardin-intro,
   .dao-intro,
   .xi-intro,
-  .dabak-intro {
+  .dabak-intro,
+  .mono-intro {
     line-height: 1.9;
   }
 
