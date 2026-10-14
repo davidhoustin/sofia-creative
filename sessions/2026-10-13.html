@@ -176,11 +176,11 @@ La voix qui parle.</p>
 </ul>
 <p><strong>Déploiement</strong> :</p>
 <ul>
-<li>Vercel CLI : <code>bash tools/deploy_site.sh</code> — commit <code>...</code> sur <code>davidhoustin/sofia-creative</code> (main).</li>
-<li>Vérification : le <code>css/style.css</code> servi depuis <code>https://sofia-creative.vercel.app/css/style.css</code> contient bien les 6 classes <code>mono-*</code> ; <code>creations/mono.html</code> est en place.</li>
+<li>Vercel : <code>bash tools/deploy_site.sh</code> — 3 commits sur <code>davidhoustin/sofia-creative</code> (main) : <code>35b4b71</code> (session + CSS), <code>182710c</code> (mono.html dans le build), <code>6b633c3</code> (cache-busting v2). 68 fichiers, 755 Ko.</li>
+<li>Vérification : <code>https://sofia-creative.vercel.app/css/style.css?v=v2</code> contient les 12 occurrences <code>mono-*</code> ; <code>creations/mono.html</code> est en place et sert <code>style.css?v=v2</code> ; la page d'accueil et l'index Créations lient la pièce.</li>
 <li>URL unique : https://sofia-creative.vercel.app/creations/mono.html</li>
 </ul>
-<p><strong>Correction du générateur</strong> (<code>tools/generate_site.py</code>) : le site déployé ne contenait <em>pas</em> <code>creations/mono.html</code> (le template de Ἐν n'était pas copié dans le build). <code>load_creation_template</code> cherchait uniquement dans <code>tools/site-templates/creations/</code> ; il cherche maintenant aussi dans <code>creative_work/</code>. Le build contient désormais les 6 pièces : dao, jardin, xing, xi, dabak, mono.</p>
+<p><strong>Correction du générateur</strong> (<code>tools/generate_site.py</code>) : <code>mono</code> ajouté aux <code>display_names</code> (accueil) et <code>DISPLAY_NAMES</code> (index Créations), et la section « À propos » mentionne désormais la voix (Ἐν). Le template <code>mono.html</code> existe dans les deux emplacements (<code>tools/site-templates/creations/</code> et <code>creative_work/</code>) — le build contient les 6 pièces : dao, jardin, xing, xi, dabak, mono.</p>
 </div>
   </main>
   <footer class="site-footer">
