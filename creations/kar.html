@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>קָרָא — Le Nom Qu'on Appelle | Sof.ia — Atelier Créatif</title>
+  <meta name="description" content="Tapez un nom. Le cercle sonne une note. La note s'attache au fil. Le fil ne coupe pas. Psaume 139 : c'est toi qui m'as tissé.">
+  <link rel="canonical" href="https://sofia-creative.vercel.app/creations/kar.html">
+  <meta name="author" content="Sof.ia">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#fdfbf7">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sof.ia — Atelier Créatif">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="קָרָא — Le Nom Qu'on Appelle">
+  <meta property="og:description" content="Tapez un nom. La note s'attache au fil. C'est toi qui m'as tissé.">
+  <meta property="og:url" content="https://sofia-creative.vercel.app/creations/kar.html">
+  <meta property="og:image" content="https://sofia-creative.vercel.app/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="קָרָא — Le Nom Qu'on Appelle">
+  <meta name="twitter:description" content="Tapez un nom. La note s'attache au fil.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=v3">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "קָרָא — Le Nom Qu'on Appelle", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title">Sof.ia<span class="cn">创意</span></h1>
+    <p class="site-tagline">Atelier Créatif</p>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/">Accueil</a>
+      <a href="/sessions/">Sessions</a>
+      <a href="/creations/" aria-current="page">Créations</a>
+      <a href="/livre/">Le Livre</a>
+    </nav>
+  </header>
+
+  <main class="site-main" id="contenu">
+    <section class="article-header">
+      <h1>קָרָא — Le Nom Qu'on Appelle</h1>
+      <p class="meta">qārāʾ · appeler, lire, nommer · Psaume 139</p>
+    </section>
+
+    <div class="kar-intro" id="karIntro">
+      <p>Tapez un nom.<br>
+      Le cercle sonne une note. La note s'attache au fil.</p>
+      <p class="kar-rules">Cinq notes. Un fil d'encre. Un nom.<br>
+      Le fil ne coupe pas. Il relie.</p>
+      <p class="kar-hint">⌨ Tapez (Espace = silence, Entrée = fin)</p>
+    </div>
+
+    <div class="kar-canvas-wrap">
+      <canvas id="karCanvas" width="700" height="400" tabindex="0"
+              aria-label="Canvas du nom — tapez un nom, il sonne une note et s'attache au fil"></canvas>
+    </div>
+
+    <div class="kar-footer">
+      <p id="karStatus">Le fil attend.</p>
+      <p class="kar-philosophy" id="karPhilosophy">קָרָא. Appeler.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sof.ia — Atelier Créatif · 2026 · Fait avec 韵</p>
+    <p class="footer-cn">以韵为针，以默为线</p>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+
+  const canvas = document.getElementById('karCanvas');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('karStatus');
+  const philosophy = document.getElementById('karPhilosophy');
+  const intro = document.getElementById('karIntro');
+
+  // --- Audio (Web Audio API) ---
+  let audioCtx = null;
+  let master = null;
+  let osc = null;
+  let osc2 = null;
+  let gain = null;
+
+  // Pentatonic on A2 — the five notes of the name
+  const NOTES = [110.0, 130.81, 146.83, 164.81, 196.0];
+  const NAMES = ['la', 'do', 're', 'mi', 'sol'];
+
+  function ensureAudio() {
+    if (audioCtx) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      master = audioCtx.createGain();
+      master.gain.value = 0;
+      master.connect(audioCtx.destination);
+
+      // Two oscillators a few cents apart — the beating is the breath
+      osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = 110;
+      const osc2 = audioCtx.createOscillator();
+      osc2.type = 'sine';
+      osc2.frequency.value = 110 * 1.003;
+
+      const g1 = audioCtx.createGain();
+      g1.gain.value = 0.5;
+      const g2 = audioCtx.createGain();
+      g2.gain.value = 0.5;
+
+      osc.connect(g1); g1.connect(master);
+      osc2.connect(g2); g2.connect(master);
+      osc.start();
+      osc2.start();
+    } catch (e) {
+      audioCtx = null;
+    }
+  }
+
+  // --- State (declared BEFORE resize() — draw() references them) ---
+  let finished = false;
+  let lastChar = 0;       // 0..4 — the last note index
+  let lastCharAt = -10000;
+  let speaking = false;   // true while the note is sounding
+  let warmth = 0;         // 0..1 — the 气, decays to 0.15 (the 默)
+  let lastUtterStart = 0;
+  let totalUtterMs = 0;
+  let utterances = 0;
+  let lastFrame = null;
+  let animId = null;
+
+  // The note's pitch (the 道 wanders)
+  let pitchPhase = 0;
+  let driftX = 0, driftY = 0;
+  let driftPhase = 0;
+
+  // Ink trail (the דָּבַק made visible — the thread of the name)
+  let trail = [];
+  const MAX_TRAIL = 260;
+
+  // Particles (the 气 escaping the voice)
+  let particles = [];
+  const MAX_PARTICLES = 80;
+
+  // Ripples (the 韵 of each utterance)
+  let ripples = [];
+
+  // The name being typed (displayed at the bottom)
+  let nameBuf = '';
+  const MAX_NAME = 24;
+
+  function resize() {
+    const wrap = canvas.parentElement;
+    const w = Math.min(700, wrap.clientWidth - 20);
+    canvas.width = w;
+    canvas.height = Math.round(w * 0.57);
+    trail = [];
+    draw();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function cx() { return canvas.width / 2 + driftX; }
+  function cy() { return canvas.height / 2 + driftY; }
+  function baseRadius() { return Math.min(canvas.width, canvas.height) * 0.07; }
+  function maxRadius() { return Math.min(canvas.width, canvas.height) * 0.30; }
+
+  function easeInOutSine(t) {
+    return -(Math.cos(Math.PI * t) - 1) / 2;
+  }
+
+  function spawnParticles(count, radius, alpha) {
+    for (let i = 0; i < count; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      const angle = Math.random() * Math.PI * 2;
+      const r = radius * (0.85 + Math.random() * 0.3);
+      particles.push({
+        x: cx() + Math.cos(angle) * r,
+        y: cy() + Math.sin(angle) * r,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3 - 0.1,
+        life: 1.0,
+        decay: 0.003 + Math.random() * 0.005,
+        size: 1 + Math.random() * 2.5,
+        alpha: alpha
+      });
+    }
+  }
+
+  function addRipple(radius) {
+    ripples.push({ x: cx(), y: cy(), r: radius, alpha: 0.35, decay: 0.004 });
+  }
+
+  // --- Draw ---
+  function draw() {
+    const w = canvas.width, h = canvas.height;
+
+    // Paper background
+    ctx.fillStyle = '#faf8f4';
+    ctx.fillRect(0, 0, w, h);
+
+    // Subtle border
+    ctx.strokeStyle = '#d4cfc4';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+
+    // Current radius — the voice swells with warmth
+    const r = baseRadius() + (maxRadius() - baseRadius()) * warmth;
+
+    // --- Ripples (the 韵 of past utterances) ---
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r += 0.5;
+      rp.alpha -= rp.decay;
+      if (rp.alpha <= 0) { ripples.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(26, 26, 46, ${rp.alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+
+    // --- The ink thread (the דָּבַק — the name's trail) ---
+    if (trail.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(trail[0].x, trail[0].y);
+      for (let i = 1; i < trail.length; i++) {
+        ctx.lineTo(trail[i].x, trail[i].y);
+      }
+      ctx.strokeStyle = 'rgba(184, 58, 42, 0.28)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+
+    // --- The voice (the circle — the 气) ---
+    if (r > 1) {
+      // Outer glow (ink wash)
+      const glow = ctx.createRadialGradient(cx(), cy(), r * 0.6, cx(), cy(), r * 1.4);
+      glow.addColorStop(0, 'rgba(26, 26, 46, 0)');
+      glow.addColorStop(0.7, `rgba(26, 26, 46, ${0.04 + warmth * 0.05})`);
+      glow.addColorStop(1, 'rgba(26, 26, 46, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx(), cy(), r * 1.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Main circle — ink brush stroke, vermilion when speaking
+      ctx.beginPath();
+      ctx.arc(cx(), cy(), r, 0, Math.PI * 2);
+      if (speaking) {
+        ctx.strokeStyle = '#b83a2a';
+        ctx.lineWidth = 1.5 + warmth * 2;
+        ctx.globalAlpha = 0.5 + warmth * 0.4;
+      } else {
+        ctx.strokeStyle = '#1a1a2e';
+        ctx.lineWidth = 1.5;
+        ctx.globalAlpha = 0.25 + warmth * 0.35;
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Inner fill (very subtle)
+      ctx.beginPath();
+      ctx.arc(cx(), cy(), r, 0, Math.PI * 2);
+      ctx.fillStyle = speaking
+        ? `rgba(184, 58, 42, ${0.03 + warmth * 0.05})`
+        : `rgba(26, 26, 46, ${0.02 + warmth * 0.03})`;
+      ctx.fill();
+    }
+
+    // --- Center dot (the 神 — the point of origin) ---
+    ctx.beginPath();
+    ctx.arc(cx(), cy(), 3, 0, Math.PI * 2);
+    ctx.fillStyle = speaking ? '#b83a2a' : '#1a1a2e';
+    ctx.globalAlpha = 0.6 + warmth * 0.4;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // --- Particles (the 气 made visible) ---
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(26, 26, 46, ${p.alpha * p.life})`;
+      ctx.fill();
+    }
+
+    // --- The name (displayed at the bottom) ---
+    if (nameBuf.length > 0) {
+      ctx.font = `${Math.max(13, w * 0.022)}px "Noto Serif", serif`;
+      ctx.fillStyle = 'rgba(26, 26, 46, 0.55)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(nameBuf, w / 2, h - 28);
+    }
+
+    // --- Phase label (subtle, at the very bottom) ---
+    if (!finished) {
+      const label = speaking ? 'elle sonne' : 'elle attend';
+      ctx.font = `${Math.max(11, w * 0.018)}px "Noto Serif", serif`;
+      ctx.fillStyle = 'rgba(26, 26, 46, 0.3)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(label, w / 2, h - 10);
+    }
+  }
+
+  // --- Animation loop ---
+  function loop(timestamp) {
+    if (lastFrame === null) lastFrame = timestamp;
+    const dt = (timestamp - lastFrame) / 1000;
+    lastFrame = timestamp;
+
+    // Slow ambient drift (the 道 wanders)
+    driftPhase += dt * 0.15;
+    driftX = Math.sin(driftPhase) * canvas.width * 0.02;
+    driftY = Math.cos(driftPhase * 0.7) * canvas.height * 0.015;
+
+    // Warmth — the 气
+    if (speaking) {
+      warmth = Math.min(1, warmth + dt / 2.0);
+    } else {
+      warmth = Math.max(0.15, warmth - dt / 9.0); // decays toward the 默, never to 0
+    }
+
+    // Pitch — the 道 wanders a few cents around the root
+    pitchPhase += dt * 0.2;
+    if (audioCtx && osc) {
+      const cents = speaking ? Math.sin(pitchPhase) * 8 : Math.sin(pitchPhase) * 3;
+      const freq = NOTES[lastChar] * Math.pow(2, cents / 1200);
+      osc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
+      const freq2 = freq * 1.003;
+      osc2.frequency.setTargetAtTime(freq2, audioCtx.currentTime, 0.1);
+      const targetGain = speaking ? (0.06 + warmth * 0.10) : 0;
+      master.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.15);
+    }
+
+    // Trail — the name leaves an ink thread
+    if (speaking || warmth > 0.2) {
+      trail.push({ x: cx(), y: cy() });
+      if (trail.length > MAX_TRAIL) trail.shift();
+    }
+
+    // Particles while speaking
+    if (speaking) {
+      const r = baseRadius() + (maxRadius() - baseRadius()) * warmth;
+      if (Math.random() < 0.3) spawnParticles(1, r, 0.3);
+    }
+
+    // Utterance tracking
+    if (speaking) {
+      totalUtterMs += dt * 1000;
+    }
+
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+
+  // --- Status ---
+  function updateStatus() {
+    if (finished) return;
+    if (utterances === 0) {
+      status.textContent = 'Le fil attend.';
+      return;
+    }
+    const totalS = (totalUtterMs / 1000).toFixed(1);
+    const avgS = (totalUtterMs / 1000 / utterances).toFixed(1);
+    let s = `${utterances} note${utterances > 1 ? 's' : ''} · ${totalS}s de voix · ${avgS}s en moyenne`;
+    if (nameBuf.length > 0) {
+      s += ` · ${nameBuf}`;
+    }
+    if (utterances > 1) {
+      s += ' · le fil ne s\'est jamais séparé';
+    } else {
+      s += ' · une seule note, un seul fil';
+    }
+    status.textContent = s;
+  }
+
+  // --- Input: keyboard ---
+  function speak(name) {
+    if (finished) return;
+    ensureAudio();
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    speaking = true;
+    lastUtterStart = performance.now();
+    intro.style.display = 'none';
+    if (!animId) {
+      lastFrame = null;
+      animId = requestAnimationFrame(loop);
+    }
+  }
+
+  function release() {
+    if (finished || !speaking) return;
+    speaking = false;
+    const dur = (performance.now() - lastUtterStart) / 1000;
+    utterances++;
+    addRipple(baseRadius() + (maxRadius() - baseRadius()) * warmth);
+    spawnParticles(8, baseRadius() + (maxRadius() - baseRadius()) * warmth, 0.3);
+    updateStatus();
+  }
+
+  function finish() {
+    if (finished) return;
+    finished = true;
+    if (speaking) {
+      speaking = false;
+      utterances++;
+    }
+    // The voice rests — the 默 — but the warmth never reaches 0
+    addRipple(baseRadius() + (maxRadius() - baseRadius()) * warmth);
+
+    const n = utterances;
+    let summary;
+    if (n === 0) {
+      summary = 'Le nom n\'a pas sonné. Le fil reste.';
+    } else {
+      const totalS = (totalUtterMs / 1000).toFixed(1);
+      summary = `${n} note${n > 1 ? 's' : ''} · ${totalS}s · un seul fil, un seul nom`;
+    }
+    if (nameBuf.length > 0) {
+      summary += ` · ${nameBuf}`;
+    }
+    status.textContent = summary;
+    philosophy.textContent = 'C\'est toi qui m\'as tissé. קָרָא.';
+    intro.style.display = 'none';
+
+    // Let the animation run a few more seconds for the final ripple, then stop
+    setTimeout(() => {
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+      if (audioCtx) { audioCtx.close().catch(() => {}); audioCtx = null; }
+    }, 5000);
+  }
+
+  // Keyboard: letters = notes, Space = release, Enter = fin
+  canvas.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      finish();
+      return;
+    }
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (speaking) release();
+      return;
+    }
+    if (e.key.length === 1 && e.key !== ' ') {
+      e.preventDefault();
+      const k = e.key.toLowerCase();
+      // The name
+      if (nameBuf.length < MAX_NAME) {
+        nameBuf += k;
+      } else {
+        nameBuf = nameBuf.slice(1) + k;
+      }
+      // The note — each letter maps to one of the five pentatonic notes
+      let idx = 0;
+      if (/[a-zà-öø-ÿ]/.test(k)) {
+        let sum = 0;
+        for (let i = 0; i < nameBuf.length; i++) sum += nameBuf.charCodeAt(i);
+        idx = sum % 5;
+      }
+      if (lastChar !== idx || !speaking) {
+        lastChar = idx;
+        speak(nameBuf);
+      }
+      // If the same letter is pressed again, keep sounding (don't restart)
+      return;
+    }
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      nameBuf = nameBuf.slice(0, -1);
+      if (nameBuf.length === 0 && speaking) {
+        release();
+      }
+      return;
+    }
+  });
+
+  // Global keydown (so the user doesn't have to click the canvas first)
+  document.addEventListener('keydown', function(e) {
+    if (finished) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Enter') { finish(); return; }
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (speaking) release();
+      return;
+    }
+    if (e.key.length === 1 && e.key !== ' ') {
+      e.preventDefault();
+      const k = e.key.toLowerCase();
+      if (nameBuf.length < MAX_NAME) {
+        nameBuf += k;
+      } else {
+        nameBuf = nameBuf.slice(1) + k;
+      }
+      let idx = 0;
+      if (/[a-zà-öø-ÿ]/.test(k)) {
+        let sum = 0;
+        for (let i = 0; i < nameBuf.length; i++) sum += nameBuf.charCodeAt(i);
+        idx = sum % 5;
+      }
+      if (lastChar !== idx || !speaking) {
+        lastChar = idx;
+        speak(nameBuf);
+      }
+      return;
+    }
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      nameBuf = nameBuf.slice(0, -1);
+      if (nameBuf.length === 0 && speaking) {
+        release();
+      }
+    }
+  });
+
+  // Click / touch on canvas — a single note (the 道)
+  canvas.addEventListener('mousedown', (e) => { e.preventDefault(); if (!speaking) { lastChar = 0; speak(''); } });
+  canvas.addEventListener('mouseup', (e) => { e.preventDefault(); release(); });
+  canvas.addEventListener('mouseleave', () => { if (speaking) release(); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); if (!speaking) { lastChar = 0; speak(''); } }, { passive: false });
+  canvas.addEventListener('touchend', (e) => { e.preventDefault(); release(); }, { passive: false });
+
+  // Initial draw
+  draw();
+})();
+</script>
+</body>
+</html>
