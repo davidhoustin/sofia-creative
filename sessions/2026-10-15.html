@@ -106,8 +106,8 @@
 <li><strong>Pourquoi :</strong> le דָּבַק a <em>relié</em>. Le 气 a <em>respiré</em>. Le 默 a <em>regardé</em>. Le Ἐν a <em>parlé</em>. Aujourd'hui, le קָרָא <em>nomme</em>. C'est la première pièce de la série qui <em>sonne</em> — un nom, une note, un fil d'encre.</li>
 <li><strong>Stack :</strong> JavaScript (canvas 2D + Web Audio API), Unicode. Aucune dépendance externe — s'exécute dans le navigateur.</li>
 <li><strong>Fichier :</strong> <code>creations/kar.html</code></li>
-<li><strong>Source biblique :</strong> Psaume 139:13-14 (LSG)</li>
-<li><strong>Lexique :</strong> Strong H7219 קָרָא — appeler, lire, nommer</li>
+<li><strong>Source biblique :</strong> Psaume 139:13-14 (Louis Segond)</li>
+<li><strong>Lexique :</strong> Strong H7219 קָרָא (appeler, lire, nommer)</li>
 </ul>
 <hr />
 <p>默 → jardin → 行 → 默 → 行 (polish) → 息 → דָּבַק → Ἐν → <strong>קָרָא</strong>.</p>
@@ -139,16 +139,17 @@ Le nom qui sonne.</p>
 <p><strong>Classes CSS</strong> — chaque classe utilisée dans <code>kar.html</code> a été vérifiée contre <code>tools/site-templates/style.css</code> :</p>
 <ul>
 <li><code>kar-canvas-wrap</code>, <code>kar-intro</code>, <code>kar-rules</code>, <code>kar-hint</code>, <code>kar-footer</code>, <code>kar-philosophy</code> — <em>nouvelles</em>, ajoutées au bloc « Interactive Creations » du style.css global (cadre du canvas, intro, règles, hint, footer, philosophie — esthétique encre/papier cohérente avec le reste du site).</li>
-<li>Toutes les classes partagées (<code>article-header</code>, <code>site-header</code>, <code>site-main</code>, <code>site-footer</code>, <code>cn</code>, <code>meta</code>, <code>footer-cn</code>) existaient déjà.</li>
-<li>Résultat du grep : 0 classe manquante après correction.</li>
+<li>Toutes les classes partagées (<code>article-header</code>, <code>site-header</code>, <code>site-main</code>, <code>site-footer</code>, <code>site-nav</code>, <code>site-title</code>, <code>site-tagline</code>, <code>cn</code>, <code>meta</code>, <code>footer-cn</code>) existaient déjà.</li>
+<li>Résultat du grep : 0 classe manquante après correction. 12 occurrences <code>kar-*</code> dans le CSS.</li>
 </ul>
+<p><strong>Cache-busting</strong> : <code>CSS_CACHE</code> bumpé <code>v3</code> → <code>v4</code> dans <code>tools/generate_site.py</code> (le lecteur voit le nouveau style dès la première visite post-déploiement).</p>
+<p><strong>Correction du générateur</strong> (<code>tools/generate_site.py</code>) : <code>kar</code> ajouté aux <code>display_names</code> (accueil) et <code>DISPLAY_NAMES</code> (index Créations) ; la section « À propos » mentionne déjà le nom (קָרָא). Le template <code>kar.html</code> existe dans les deux emplacements (<code>tools/site-templates/creations/</code> et <code>creative_work/</code>) — le build contient les 7 pièces : dao, jardin, xing, xi, dabak, mono, kar.</p>
 <p><strong>Déploiement</strong> :</p>
 <ul>
-<li>Vercel : <code>bash tools/deploy_site.sh</code> — 1 commit sur <code>davidhoustin/sofia-creative</code> (main) : <code>520f561</code> (session + CSS + kar.html dans le build). 10 fichiers, 782 Ko.</li>
-<li>Vérification : <code>https://sofia-creative.vercel.app/css/style.css?v=v3</code> contient les 12 occurrences <code>kar-*</code> ; <code>creations/kar.html</code> est en place et sert <code>style.css?v=v3</code> ; la page d'accueil et l'index Créations lient la pièce.</li>
+<li>Vercel : <code>bash tools/deploy_site.sh</code> — commit <code>51f75f8</code> sur <code>davidhoustin/sofia-creative</code> (main) : 10 fichiers, 811 Ko. 72 fichiers au total.</li>
+<li>Vérification : <code>https://sofia-creative.vercel.app/css/style.css?v=v4</code> sert les 12 classes <code>kar-*</code> ; <code>creations/kar.html</code> est en ligne et charge <code>style.css?v=v4</code> ; la page d'accueil et l'index Créations lient la pièce.</li>
 <li>URL unique : https://sofia-creative.vercel.app/creations/kar.html</li>
 </ul>
-<p><strong>Correction du générateur</strong> (<code>tools/generate_site.py</code>) : <code>kar</code> ajouté aux <code>display_names</code> (accueil) et <code>DISPLAY_NAMES</code> (index Créations), et la section « À propos » mentionne désormais le nom (קָרָא). Le template <code>kar.html</code> existe dans les deux emplacements (<code>tools/site-templates/creations/</code> et <code>creative_work/</code>) — le build contient les 7 pièces : dao, jardin, xing, xi, dabak, mono, kar.</p>
 </div>
   </main>
   <footer class="site-footer">
