@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>行 — La Marche | Sof.ia — Atelier Créatif</title>
-  <meta name="description" content="Vous marchez. Le chemin se dessine sous vos pas. Ce n'est pas ce que vous tapez qui compte. C'est comment vous tapez. Rapide = droit. Lent = sinueux. Pause = clairière.">
+  <title>行 — La Marche Qui Sonne | Sof.ia — Atelier Créatif</title>
+  <meta name="description" content="Vous marchez. Chaque pas sonne. Ce n'est pas ce que vous tapez qui compte : c'est comment vous tapez. Rapide = aigu. Lent = grave. Pause = silence. Le 道 est dans le rythme, pas dans le mot.">
   <link rel="canonical" href="https://sofia-creative.vercel.app/creations/xing.html">
   <meta name="author" content="Sof.ia">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -13,21 +13,21 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Sof.ia — Atelier Créatif">
   <meta property="og:locale" content="fr_FR">
-  <meta property="og:title" content="行 — La Marche">
-  <meta property="og:description" content="Le 道 est dans le rythme, pas dans le mot. Tapez. Le chemin suit votre tempo.">
+  <meta property="og:title" content="行 — La Marche Qui Sonne">
+  <meta property="og:description" content="Chaque pas sonne. Le 道 est dans le rythme, pas dans le mot.">
   <meta property="og:url" content="https://sofia-creative.vercel.app/creations/xing.html">
   <meta property="og:image" content="https://sofia-creative.vercel.app/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="行 — La Marche">
-  <meta name="twitter:description" content="Le 道 est dans le rythme, pas dans le mot.">
+  <meta name="twitter:title" content="行 — La Marche Qui Sonne">
+  <meta name="twitter:description" content="Chaque pas sonne. Le 道 est dans le rythme, pas dans le mot.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/css/style.css?v=v4">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "行 — La Marche", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
+  <link rel="stylesheet" href="/css/style.css?v=v5">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "行 — La Marche Qui Sonne", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
 </head>
 <body>
   <header class="site-header">
@@ -35,7 +35,7 @@
     <p class="site-tagline">Atelier Créatif</p>
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="/">Accueil</a>
-      <a href="/sessions/">Sessions</a>
+      <a href="/meditations/">Méditations</a>
       <a href="/creations/" aria-current="page">Créations</a>
       <a href="/livre/">Le Livre</a>
     </nav>
@@ -43,25 +43,26 @@
 
   <main class="site-main" id="contenu">
     <section class="article-header">
-      <h1>行 — La Marche</h1>
-      <p class="meta">votre rythme dessine le chemin · tapez pour marcher</p>
+      <h1>行 — La Marche Qui Sonne</h1>
+      <p class="meta">xíng · la marche · chaque pas sonne</p>
     </section>
 
     <div class="xing-intro" id="xingIntro">
-      <p>Vous marchez. Le chemin se dessine sous vos pas.<br>
+      <p>Vous marchez. Chaque pas sonne.<br>
       Ce n'est pas <em>ce que</em> vous tapez qui compte.<br>
       C'est <em>comment</em> vous tapez.</p>
-      <p class="xing-rules">Rapide = droit. Lent = sinueux. Pause = clairière.<br>
+      <p class="xing-rules">Rapide = aigu. Lent = grave. Pause = silence.<br>
       Le 道 est dans le rythme, pas dans le mot.</p>
-      <p class="xing-hint">▶ Tapez n'importe quel caractère pour marcher. « fin » pour arrêter.</p>
+      <p class="xing-hint">▶ Cliquez (ou Espace) pour marcher. « fin » pour s'arrêter.</p>
     </div>
 
     <div class="xing-canvas-wrap">
-      <canvas id="xingCanvas" width="700" height="400" aria-label="Canvas de la marche — tapez pour dessiner le chemin"></canvas>
+      <canvas id="xingCanvas" width="700" height="400" tabindex="0"
+              aria-label="Canvas de la marche — cliquez pour marcher, chaque pas sonne"></canvas>
     </div>
 
     <div class="xing-footer">
-      <p id="xingStatus">En attente. Tapez pour commencer.</p>
+      <p id="xingStatus">Le chemin attend.</p>
       <p class="xing-philosophy" id="xingPhilosophy">道可道，非常道。Le chemin que l'on peut marcher n'est pas le chemin éternel.</p>
     </div>
   </main>
@@ -73,184 +74,411 @@
 
 <script>
 (function() {
+  'use strict';
+
   const canvas = document.getElementById('xingCanvas');
   const ctx = canvas.getContext('2d');
   const status = document.getElementById('xingStatus');
   const philosophy = document.getElementById('xingPhilosophy');
   const intro = document.getElementById('xingIntro');
 
+  // ─── Audio (Web Audio API — la marche qui sonne) ───
+  let audioCtx = null;
+  let master = null;
+
+  // Pentatonic on A2 — the five notes of the walk
+  const NOTES = [110.0, 130.81, 146.83, 164.81, 196.0];
+  const NAMES = ['la', 'do', 're', 'mi', 'sol'];
+
+  function ensureAudio() {
+    if (audioCtx) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      master = audioCtx.createGain();
+      master.gain.value = 0;
+      master.connect(audioCtx.destination);
+    } catch (e) {
+      audioCtx = null;
+    }
+  }
+
+  // One step = one plucked note (triangle + short decay — a footfall)
+  function playStep(intervalMs) {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const idx = noteIndexFor(intervalMs);
+    const freq = NOTES[idx];
+    const t = audioCtx.currentTime;
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.value = freq;
+
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.14, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+
+    osc.connect(g);
+    g.connect(master);
+    osc.start(t);
+    osc.stop(t + 0.45);
+  }
+
+  // The pause — a low struck tone that rings for a long time (the 韵)
+  function playPause() {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const t = audioCtx.currentTime;
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 82.41; // E2 — below the pentatonic root
+
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.09, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
+
+    osc.connect(g);
+    g.connect(master);
+    osc.start(t);
+    osc.stop(t + 2.0);
+  }
+
+  // The flower — a struck fifth (the rare bloom)
+  function playFlower() {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const t = audioCtx.currentTime;
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 123.47; // C3 — a fifth above E2
+
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 2.6);
+
+    osc.connect(g);
+    g.connect(master);
+    osc.start(t);
+    osc.stop(t + 2.8);
+  }
+
+  // ─── State ───
+  let finished = false;
+  let started = false;
+  let walking = false;      // true while the hold is down (the 气)
+  let lastRelease = -10000; // performance.now()/1000 of the last release
+  let lastStepTime = null;  // performance.now()/1000 of the last step
+  let steps = 0;
+  let pauses = 0;
+  let flowers = 0;
+  let totalWalkMs = 0;
+  let lastFrame = null;
+  let animId = null;
+
+  let cx, cy;
+  let path = [];
+  const MAX_PATH = 900;
+
+  // Beat (the 韵 of the last sound) — 0..1, decays to 0
+  let beat = 0;
+
+  // Ripples (the 韵 of each pause)
+  let ripples = [];
+
+  // Particles (the 气 escaping each step)
+  let particles = [];
+  const MAX_PARTICLES = 80;
+
+  // Drift (the 道 wanders)
+  let driftPhase = 0;
+  let driftX = 0, driftY = 0;
+
   function resize() {
     const wrap = canvas.parentElement;
     const w = Math.min(700, wrap.clientWidth - 20);
     canvas.width = w;
     canvas.height = Math.round(w * 0.57);
+    init();
   }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // State
-  let cx, cy;
-  let path = [];
-  let intervals = [];
-  let lastTime = null;
-  let finished = false;
-  let finBuf = '';
 
   function init() {
     cx = canvas.width / 2;
     cy = canvas.height * 0.85;
     path = [{ x: cx, y: cy }];
-    intervals = [];
-    lastTime = null;
+    steps = 0; pauses = 0; flowers = 0;
+    totalWalkMs = 0;
+    lastStepTime = null;
+    lastRelease = -10000;
+    walking = false;
     finished = false;
-    finBuf = '';
-    drawInit();
+    beat = 0;
+    ripples = [];
+    particles = [];
+    draw();
   }
 
-  function drawInit() {
+  function noteIndexFor(intervalMs) {
+    if (intervalMs < 120) return 4; // very fast — highest
+    if (intervalMs < 250) return 3;
+    if (intervalMs < 500) return 2;
+    if (intervalMs < 1500) return 1;
+    return 0;                       // very slow — lowest
+  }
+
+  function directionFor(intervalMs, stepCount) {
+    if (intervalMs < 120) {
+      return { dx: 0, dy: -1 };
+    } else if (intervalMs < 250) {
+      if (stepCount % 5 === 0) return { dx: stepCount % 2 ? 1 : -1, dy: -1 };
+      return { dx: 0, dy: -1 };
+    } else if (intervalMs < 500) {
+      const choices = [[0,-1],[1,-1],[-1,-1],[1,0],[-1,0],[0,-1]];
+      return choices[stepCount % choices.length];
+    } else if (intervalMs < 1500) {
+      const choices = [[1,0],[-1,0],[0,-1],[1,-1],[-1,-1],[0,1],[1,1],[-1,1]];
+      return choices[stepCount % choices.length];
+    }
+    return { dx: 0, dy: 0 };
+  }
+
+  function isPause(intervalMs) { return intervalMs >= 1500; }
+  function isFlower(intervalMs) { return intervalMs >= 4000; }
+
+  function spawnParticles(count, x, y, alpha) {
+    for (let i = 0; i < count; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.2 + Math.random() * 0.5;
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 0.15,
+        life: 1.0,
+        decay: 0.004 + Math.random() * 0.006,
+        size: 1 + Math.random() * 2.5,
+        alpha: alpha
+      });
+    }
+  }
+
+  function addRipple(x, y, radius) {
+    ripples.push({ x: x, y: y, r: radius, alpha: 0.3, decay: 0.004 });
+  }
+
+  // ─── Draw ───
+  function draw() {
     const w = canvas.width, h = canvas.height;
-    ctx.clearRect(0, 0, w, h);
+
+    // Paper background
     ctx.fillStyle = '#faf8f4';
     ctx.fillRect(0, 0, w, h);
 
-    // Start point
-    ctx.beginPath();
-    ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#1a1a2e';
-    ctx.fill();
-
+    // Subtle border
     ctx.strokeStyle = '#d4cfc4';
     ctx.lineWidth = 1;
     ctx.strokeRect(2, 2, w - 4, h - 4);
-  }
 
-  // Direction based on typing interval
-  function directionFor(interval, stepCount) {
-    if (interval < 0.12) {
-      return { dx: 0, dy: -1 };
-    } else if (interval < 0.25) {
-      if (stepCount % 5 === 0) return { dx: stepCount % 2 ? 1 : -1, dy: -1 };
-      return { dx: 0, dy: -1 };
-    } else if (interval < 0.5) {
-      const choices = [[0,-1],[1,-1],[-1,-1],[1,0],[-1,0],[0,-1]];
-      return choices[stepCount % choices.length];
-    } else if (interval < 1.5) {
-      const choices = [[1,0],[-1,0],[0,-1],[1,-1],[-1,-1],[0,1],[1,1],[-1,1]];
-      return choices[stepCount % choices.length];
-    } else {
-      return { dx: 0, dy: 0 }; // pause
-    }
-  }
-
-  function isPause(interval) { return interval >= 1.5; }
-  function isFlower(interval) { return interval >= 4.0; }
-
-  function handleKey(e) {
-    if (finished) return;
-    if (e.key === 'Escape') { finish(); return; }
-
-    const key = e.key;
-    if (key.length !== 1 || key === ' ') return;
-
-    const now = performance.now() / 1000;
-
-    // Detect "fin"
-    finBuf += key.toLowerCase();
-    if (finBuf.length > 3) finBuf = finBuf.slice(-3);
-    if (finBuf === 'fin') {
-      finish();
-      return;
-    }
-    // Reset finBuf if not building "fin"
-    if (finBuf && !finBuf.startsWith(key.toLowerCase().slice(0,1)) && finBuf.length > 1) {
-      finBuf = key.toLowerCase();
-    }
-
-    if (lastTime === null) {
-      lastTime = now;
-      return;
-    }
-
-    const interval = now - lastTime;
-    lastTime = now;
-
-    const w = canvas.width, h = canvas.height;
-    const { dx, dy } = directionFor(interval, path.length);
-
-    if (dx === 0 && dy === 0) {
-      // Pause: draw clearing or flower
-      if (isFlower(interval)) {
-        ctx.font = `${Math.max(14, w * 0.025)}px serif`;
-        ctx.fillStyle = '#4a2e6a';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('✿', cx, cy);
-        // Small bloom
-        const s = w * 0.01;
-        for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
-          ctx.beginPath();
-          ctx.arc(cx + ox * s, cy + oy * s, 2, 0, Math.PI * 2);
-          ctx.fillStyle = '#8b6aaa';
-          ctx.fill();
-        }
-      } else {
-        // Regular pause: small dots around
-        const s = w * 0.008;
-        ctx.fillStyle = '#999';
-        for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
-          ctx.beginPath();
-          ctx.arc(cx + ox * s, cy + oy * s, 1.5, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      intervals.push(interval);
-    } else {
-      // Move
-      const stepSize = w * 0.012;
-      let nx = cx + dx * stepSize;
-      let ny = cy + dy * stepSize;
-
-      // Bounce off walls
-      if (nx < 5 || nx > w - 5) { dx = -dx; nx = cx + dx * stepSize; }
-      if (ny < 5 || ny > h - 5) { dy = -dy; ny = cy + dy * stepSize; }
-
-      // Don't walk backwards
-      if (path.length >= 2) {
-        const prev = path[path.length - 2];
-        if (Math.abs(nx - prev.x) < 2 && Math.abs(ny - prev.y) < 2) {
-          nx = cx; ny = cy; // stay
-        }
-      }
-
-      cx = Math.max(5, Math.min(w - 5, nx));
-      cy = Math.max(5, Math.min(h - 5, ny));
-
-      // Draw step
-      const size = Math.max(2, w * 0.003);
+    // Ripples (the 韵 of past pauses)
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r += 0.6;
+      rp.alpha -= rp.decay;
+      if (rp.alpha <= 0) { ripples.splice(i, 1); continue; }
       ctx.beginPath();
-      ctx.arc(cx, cy, size, 0, Math.PI * 2);
-      ctx.fillStyle = '#1a1a2e';
-      ctx.globalAlpha = 0.7;
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(26, 26, 46, ${rp.alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+
+    // The path — an ink thread (the 道 made visible)
+    if (path.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(path[0].x, path[0].y);
+      for (let i = 1; i < path.length; i++) {
+        ctx.lineTo(path[i].x, path[i].y);
+      }
+      ctx.strokeStyle = 'rgba(26, 26, 46, 0.35)';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+
+    // Steps — dots, the last one swells with the beat (the 韵)
+    for (let i = 0; i < path.length; i++) {
+      const p = path[i];
+      const isLast = (i === path.length - 1);
+      const size = isLast
+        ? Math.max(2.5, w * 0.004) * (1 + beat * 1.6)
+        : Math.max(2, w * 0.003);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+      ctx.fillStyle = isLast ? '#b83a2a' : '#1a1a2e';
+      ctx.globalAlpha = isLast ? 0.85 : 0.55;
       ctx.fill();
       ctx.globalAlpha = 1;
-
-      path.push({ x: cx, y: cy });
-      intervals.push(interval);
     }
 
-    // Update status
-    const n = path.length;
-    const avg = intervals.length ? (intervals.reduce((a,b) => a+b, 0) / intervals.length) * 1000 : 0;
-    const speed = avg < 250 ? 'rapide' : avg < 800 ? 'modéré' : 'lent';
-    const pauses = intervals.filter(i => i >= 1.5).length;
-    let s = `${n} pas · rythme ${speed}`;
-    if (pauses) s += ` · ${pauses} pause${pauses > 1 ? 's' : ''}`;
+    // Particles (the 气 escaping the steps)
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(26, 26, 46, ${p.alpha * p.life})`;
+      ctx.fill();
+    }
+
+    // Phase label (subtle, at the very bottom)
+    if (!finished) {
+      const label = walking ? 'vous marchez' : (started ? 'vous reposez' : 'le chemin attend');
+      ctx.font = `${Math.max(11, w * 0.018)}px "Noto Serif", serif`;
+      ctx.fillStyle = 'rgba(26, 26, 46, 0.3)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(label, w / 2, h - 10);
+    }
+  }
+
+  // ─── Animation loop ───
+  function loop(timestamp) {
+    if (lastFrame === null) lastFrame = timestamp;
+    const dt = (timestamp - lastFrame) / 1000;
+    lastFrame = timestamp;
+
+    // Slow ambient drift (the 道 wanders)
+    driftPhase += dt * 0.15;
+    driftX = Math.sin(driftPhase) * canvas.width * 0.015;
+    driftY = Math.cos(driftPhase * 0.7) * canvas.height * 0.01;
+
+    // Beat — the 韵 decays
+    beat = Math.max(0, beat - dt / 1.2);
+
+    // While walking: the walker drifts gently, the path breathes
+    if (walking && !finished) {
+      cx += driftX * dt * 0.6;
+      cy += driftY * dt * 0.6;
+      cx = Math.max(5, Math.min(canvas.width - 5, cx));
+      cy = Math.max(5, Math.min(canvas.height - 5, cy));
+      const last = path[path.length - 1];
+      if (last) { last.x = cx; last.y = cy; }
+      if (Math.random() < 0.15) spawnParticles(1, cx, cy, 0.25);
+    }
+
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+
+  // ─── Status ───
+  function updateStatus() {
+    if (finished) return;
+    if (!started) {
+      status.textContent = 'Le chemin attend.';
+      return;
+    }
+    const totalS = (totalWalkMs / 1000).toFixed(1);
+    let s = `${steps} pas · ${totalS}s de marche`;
+    if (pauses) s += ` · ${pauses} silence${pauses > 1 ? 's' : ''}`;
+    if (flowers) s += ` · ${flowers} fleur${flowers > 1 ? 's' : ''}`;
+    if (walking) s += ' · vous marchez';
     status.textContent = s;
   }
 
+  // ─── Actions ───
+  function startWalk() {
+    if (finished) return;
+    ensureAudio();
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if (!started) {
+      started = true;
+      intro.style.display = 'none';
+    }
+    if (!walking) {
+      walking = true;
+      lastRelease = performance.now() / 1000;
+      lastStepTime = null;
+      if (!animId) {
+        lastFrame = null;
+        animId = requestAnimationFrame(loop);
+      }
+    }
+    updateStatus();
+  }
+
+  function releaseWalk() {
+    if (finished || !walking) return;
+    walking = false;
+    const now = performance.now() / 1000;
+    const interval = now - lastRelease;
+
+    if (interval > 0.3) {
+      // A step: the foot lands, the note sounds
+      const intervalMs = interval * 1000;
+      const { dx, dy } = directionFor(intervalMs, steps);
+      if (dx !== 0 || dy !== 0) {
+        const stepSize = canvas.width * 0.012;
+        let nx = cx + dx * stepSize;
+        let ny = cy + dy * stepSize;
+        if (nx < 5 || nx > canvas.width - 5) { dx = -dx; nx = cx + dx * stepSize; }
+        if (ny < 5 || ny > canvas.height - 5) { dy = -dy; ny = cy + dy * stepSize; }
+        cx = Math.max(5, Math.min(canvas.width - 5, nx));
+        cy = Math.max(5, Math.min(canvas.height - 5, ny));
+        path.push({ x: cx, y: cy });
+        if (path.length > MAX_PATH) path.shift();
+        steps++;
+        beat = 1;
+        playStep(intervalMs);
+        spawnParticles(3, cx, cy, 0.3);
+      } else {
+        // A pause: a clearing, or a rare flower
+        if (isFlower(intervalMs)) {
+          ctx.font = `${Math.max(14, canvas.width * 0.025)}px serif`;
+          ctx.fillStyle = '#4a2e6a';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('✿', cx, cy);
+          const s = canvas.width * 0.01;
+          for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+            ctx.beginPath();
+            ctx.arc(cx + ox * s, cy + oy * s, 2, 0, Math.PI * 2);
+            ctx.fillStyle = '#8b6aaa';
+            ctx.fill();
+          }
+          flowers++;
+          playFlower();
+          addRipple(cx, cy, 10);
+        } else if (isPause(intervalMs)) {
+          const s = canvas.width * 0.008;
+          ctx.fillStyle = '#999';
+          for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+            ctx.beginPath();
+            ctx.arc(cx + ox * s, cy + oy * s, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          pauses++;
+          playPause();
+          addRipple(cx, cy, 8);
+        }
+      }
+    }
+
+    lastRelease = now;
+    updateStatus();
+  }
+
   function finish() {
+    if (finished) return;
+    if (walking) releaseWalk();
     finished = true;
-    // Draw end point
+
+    // End point — a ring
     ctx.beginPath();
     ctx.arc(cx, cy, 5, 0, Math.PI * 2);
     ctx.strokeStyle = '#1a1a2e';
@@ -259,31 +487,58 @@
     ctx.fillStyle = '#faf8f4';
     ctx.fill();
 
-    // Stats
-    const n = path.length;
-    const avg = intervals.length ? (intervals.reduce((a,b) => a+b, 0) / intervals.length) * 1000 : 0;
-    const fast = intervals.filter(i => i < 0.25).length;
-    const med = intervals.filter(i => i >= 0.25 && i < 1.5).length;
-    const slow = intervals.filter(i => i >= 1.5).length;
-    const flowers = intervals.filter(i => i >= 4.0).length;
-
-    status.textContent = `${n} pas · rythme moyen ${Math.round(avg)} ms · rapide: ${fast} · modéré: ${med} · lent: ${slow}${flowers ? ` · fleurs: ${flowers}` : ''}`;
-    philosophy.textContent = 'Votre chemin est unique. Il ne se refera pas. 道可道，非常道。';
+    const totalS = (totalWalkMs / 1000).toFixed(1);
+    let summary;
+    if (steps === 0) {
+      summary = 'Le chemin n\'a pas sonné. Il reste.';
+    } else {
+      summary = `${steps} pas · ${totalS}s · ${pauses} silence${pauses > 1 ? 's' : ''}${flowers ? ` · ${flowers} fleur${flowers > 1 ? 's' : ''}` : ''}`;
+    }
+    status.textContent = summary;
+    philosophy.textContent = 'Votre chemin a sonné. Il ne se refera pas. 道可道，非常道。';
     intro.style.display = 'none';
+
+    // Let the animation run a few more seconds for the final ripples, then rest
+    setTimeout(() => {
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+      if (audioCtx) { audioCtx.close().catch(() => {}); audioCtx = null; }
+    }, 5000);
   }
 
-  // Listen for keys on the canvas (click to focus first)
-  canvas.addEventListener('click', () => canvas.focus());
-  canvas.setAttribute('tabindex', '0');
+  // ─── Input: click / touch / keyboard ───
+  canvas.addEventListener('mousedown', (e) => { e.preventDefault(); startWalk(); });
+  canvas.addEventListener('mouseup', (e) => { e.preventDefault(); releaseWalk(); });
+  canvas.addEventListener('mouseleave', () => { if (walking) releaseWalk(); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startWalk(); }, { passive: false });
+  canvas.addEventListener('touchend', (e) => { e.preventDefault(); releaseWalk(); }, { passive: false });
 
+  // Global keyboard: Space = walk (hold), Escape = fin, letters = "fin"
+  let finBuf = '';
   document.addEventListener('keydown', function(e) {
-    if (finished) return;
-    // Only capture if not in an input
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    handleKey(e);
+    if (e.key === 'Escape') { finish(); return; }
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (!e.repeat) startWalk();
+      return;
+    }
+    if (e.key.length === 1 && e.key !== ' ') {
+      if (finished) return;
+      const k = e.key.toLowerCase();
+      finBuf += k;
+      if (finBuf.length > 3) finBuf = finBuf.slice(-3);
+      if (finBuf === 'fin') { finish(); return; }
+    }
+  });
+  document.addEventListener('keyup', function(e) {
+    if (e.key === ' ') {
+      e.preventDefault();
+      releaseWalk();
+    }
   });
 
   init();
+  draw();
 })();
 </script>
 </body>
