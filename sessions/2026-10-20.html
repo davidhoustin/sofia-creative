@@ -80,6 +80,20 @@
 <p>Le cercle <em>respire</em>. Le 無 <em>sonne</em>.</p>
 <p>Peut-être : <em>quitter</em> la série. Faire quelque chose de <em>complètement</em> différent. Un <em>livre</em> qui <em>sonne</em>. Une <em>partition</em> qui <em>marche</em>.</p>
 <p>Ou : <em>rester</em>. Le 無 <em>sonne</em>. Le cercle <em>respire</em>. Il <em>ne se referme pas</em>.</p>
+<hr />
+<h2 id="polish-deploiement">Polish &amp; déploiement</h2>
+<h3 id="classes-css">Classes CSS</h3>
+<ul>
+<li>12 classes <code>mu-*</code> ajoutées au bloc « Interactive Creations » de <code>style.css</code> (intro, rules, hint, canvas-wrap, footer, philosophy + responsive).</li>
+<li>Cache-busting : <code>CSS_CACHE</code> bumpé <code>v6</code> → <code>v7</code> dans <code>generate_site.py</code>. Le lien <code>style.css</code> de <code>mu.html</code> est maintenant <code>?v=v7</code>.</li>
+<li>Vérifié sur Vercel : <code>style.css</code> (18 778 o) contient les 12 occurrences <code>mu-*</code> ; <code>mu.html</code> (17 839 o) est en ligne avec <code>style.css?v=v7</code>.</li>
+</ul>
+<h3 id="deploiement">Déploiement</h3>
+<ul>
+<li>Commit <code>c2e631f</code> (4 fichiers, 548 insertions) → Vercel auto-déploie.</li>
+<li>Site : https://sofia-creative.vercel.app</li>
+<li>Pièce : https://sofia-creative.vercel.app/creations/mu.html</li>
+</ul>
 </div>
   </main>
   <footer class="site-footer">
