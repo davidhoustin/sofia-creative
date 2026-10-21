@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>無 — Le Vide Qui Résonne | Sof.ia — Atelier Créatif</title>
+  <meta name="description" content="Appuyez pour que le vide sonne. Chaque geste sonne une note du pentagramme de la marche. La pause sonne le 韵. Le 道 est dans le vide, pas dans l'image.">
+  <link rel="canonical" href="https://sofia-creative.vercel.app/creations/mu.html">
+  <meta name="author" content="Sof.ia">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#fdfbf7">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Sof.ia — Atelier Créatif">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="無 — Le Vide Qui Résonne">
+  <meta property="og:description" content="Un geste, une note, un fil d'encre. Le 道 est dans le vide, pas dans l'image.">
+  <meta property="og:url" content="https://sofia-creative.vercel.app/creations/mu.html">
+  <meta property="og:image" content="https://sofia-creative.vercel.app/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="無 — Le Vide Qui Résonne">
+  <meta name="twitter:description" content="Un geste, une note, un fil d'encre.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=v7">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "無 — Le Vide Qui Résonne", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title">Sof.ia<span class="cn">创意</span></h1>
+    <p class="site-tagline">Atelier Créatif</p>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/">Accueil</a>
+      <a href="/meditations/">Méditations</a>
+      <a href="/creations/" aria-current="page">Créations</a>
+      <a href="/livre/">Le Livre</a>
+    </nav>
+  </header>
+
+  <main class="site-main" id="contenu">
+    <section class="article-header">
+      <h1>無 — Le Vide Qui Résonne</h1>
+      <p class="meta">mú · un geste · une note · un fil d'encre</p>
+    </section>
+
+    <div class="mu-intro" id="muIntro">
+      <p>Appuyez pour que le vide sonne.<br>
+      Chaque geste sonne une note. La pause sonne le 韵.</p>
+      <p class="mu-rules">Un geste. Une note. Un fil d'encre.<br>
+      Rapide = aigu. Lent = grave. Pause = un silence qui tinte.</p>
+      <p class="mu-hint">▶ Cliquez (ou appuyez Espace) pour sonner. « fin » pour s'arrêter.</p>
+    </div>
+
+    <div class="mu-canvas-wrap">
+      <canvas id="muCanvas" width="700" height="400" tabindex="0"
+              aria-label="Canvas du vide — cliquez pour sonner, appuyez pour réchauffer"></canvas>
+    </div>
+
+    <div class="mu-footer">
+      <p id="muStatus">Le vide attend.</p>
+      <p class="mu-philosophy" id="muPhilosophy">無. Un seul geste.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sof.ia — Atelier Créatif · 2026 · Fait avec 韵</p>
+    <p class="footer-cn">以韵为针，以默为线</p>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+
+  const canvas = document.getElementById('muCanvas');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('muStatus');
+  const philosophy = document.getElementById('muPhilosophy');
+  const intro = document.getElementById('muIntro');
+
+  // ─── Audio (Web Audio API — le vide qui sonne) ───
+  let audioCtx = null;
+  let master = null;
+
+  // Same pentatonic on A2 as 行 — the walk gave its scale to the void
+  const NOTES = [110.0, 130.81, 146.83, 164.81, 196.0];
+  const NAMES = ['la', 'do', 're', 'mi', 'sol'];
+
+  function ensureAudio() {
+    if (audioCtx) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      master = audioCtx.createGain();
+      master.gain.value = 0;
+      master.connect(audioCtx.destination);
+    } catch (e) {
+      audioCtx = null;
+    }
+  }
+
+  // One gesture = one plucked note (triangle + short decay — a brush stroke)
+  function playGesture(intervalMs) {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const idx = noteIndexFor(intervalMs);
+    const freq = NOTES[idx];
+    const t = audioCtx.currentTime;
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.value = freq;
+
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.13, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
+
+    osc.connect(g);
+    g.connect(master);
+    osc.start(t);
+    osc.stop(t + 0.5);
+  }
+
+  // The pause — a low struck tone that rings for a long time (the 韵)
+  function playPause() {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const t = audioCtx.currentTime;
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 82.41; // E2 — below the pentatonic root
+
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.09, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
+
+    osc.connect(g);
+    g.connect(master);
+    osc.start(t);
+    osc.stop(t + 2.0);
+  }
+
+  // The flower — a struck fifth (the rare bloom)
+  function playFlower() {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const t = audioCtx.currentTime;
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 123.47; // C3 — a fifth above E2
+
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 2.6);
+
+    osc.connect(g);
+    g.connect(master);
+    osc.start(t);
+    osc.stop(t + 2.8);
+  }
+
+  // ─── State (declared BEFORE resize() — draw() references them) ───
+  let gesturing = false;   // true while the hold is down (the 气)
+  let pressure = 0;        // 0..1 — how long you hold (the 韵 grows)
+  let warmth = 0;          // 0..1 — the 气, decays to 0.15 (the 默)
+  let finished = false;
+  let started = false;
+  let finBuf = '';
+  let gestures = 0;
+  let pauses = 0;
+  let flowers = 0;
+  let totalGestureMs = 0;
+  let lastHoldStart = -10000;
+  let lastFrame = null;
+  let animId = null;
+
+  // The brush's position (the 道 wanders)
+  let bx, by;
+  let driftPhase = 0;
+  let driftX = 0, driftY = 0;
+
+  // Ink trail (the דָּבַק made visible — the thread of the gesture)
+  let trail = [];
+  const MAX_TRAIL = 260;
+
+  // Particles (the 气 escaping the stroke)
+  let particles = [];
+  const MAX_PARTICLES = 80;
+
+  // Ripples (the 韵 of each pause)
+  let ripples = [];
+
+  // Brush size — swells with warmth and pressure
+  function brushSize() {
+    return Math.max(2.5, canvas.width * 0.004) * (1 + warmth * 1.2 + pressure * 0.8);
+  }
+
+  function resize() {
+    const wrap = canvas.parentElement;
+    const w = Math.min(700, wrap.clientWidth - 20);
+    canvas.width = w;
+    canvas.height = Math.round(w * 0.57);
+    bx = canvas.width / 2;
+    by = canvas.height * 0.85;
+    trail = [{ x: bx, y: by }];
+    draw();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function noteIndexFor(intervalMs) {
+    if (intervalMs < 120) return 4; // very fast — highest
+    if (intervalMs < 250) return 3;
+    if (intervalMs < 500) return 2;
+    if (intervalMs < 1500) return 1;
+    return 0;                       // very slow — lowest
+  }
+
+  function isPause(intervalMs) { return intervalMs >= 1500; }
+  function isFlower(intervalMs) { return intervalMs >= 4000; }
+
+  function spawnParticles(count, x, y, alpha) {
+    for (let i = 0; i < count; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.2 + Math.random() * 0.5;
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 0.15,
+        life: 1.0,
+        decay: 0.004 + Math.random() * 0.006,
+        size: 1 + Math.random() * 2.5,
+        alpha: alpha
+      });
+    }
+  }
+
+  function addRipple(x, y, radius) {
+    ripples.push({ x: x, y: y, r: radius, alpha: 0.3, decay: 0.004 });
+  }
+
+  // ─── Draw ───
+  function draw() {
+    const w = canvas.width, h = canvas.height;
+
+    // Paper background
+    ctx.fillStyle = '#faf8f4';
+    ctx.fillRect(0, 0, w, h);
+
+    // Subtle border
+    ctx.strokeStyle = '#d4cfc4';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+
+    // Ripples (the 韵 of past pauses)
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r += 0.6;
+      rp.alpha -= rp.decay;
+      if (rp.alpha <= 0) { ripples.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(26, 26, 46, ${rp.alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+
+    // The ink trail (the דָּבַק — the thread of the gesture)
+    if (trail.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(trail[0].x, trail[0].y);
+      for (let i = 1; i < trail.length; i++) {
+        ctx.lineTo(trail[i].x, trail[i].y);
+      }
+      ctx.strokeStyle = 'rgba(26, 26, 46, 0.35)';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+
+    // The brush — a dot that swells with warmth and pressure
+    const r = brushSize();
+    ctx.beginPath();
+    ctx.arc(bx, by, r, 0, Math.PI * 2);
+    ctx.fillStyle = gesturing ? '#b83a2a' : '#1a1a2e';
+    ctx.globalAlpha = gesturing ? 0.85 : 0.55;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Particles (the 气 escaping the stroke)
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(26, 26, 46, ${p.alpha * p.life})`;
+      ctx.fill();
+    }
+
+    // Phase label (subtle, at the very bottom)
+    if (!finished) {
+      const label = gesturing ? 'vous écoutez' : (started ? 'vous reposez' : 'le pinceau attend');
+      ctx.font = `${Math.max(11, w * 0.018)}px "Noto Serif", serif`;
+      ctx.fillStyle = 'rgba(26, 26, 46, 0.3)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(label, w / 2, h - 10);
+    }
+  }
+
+  // ─── Animation loop ───
+  function loop(timestamp) {
+    if (lastFrame === null) lastFrame = timestamp;
+    const dt = (timestamp - lastFrame) / 1000;
+    lastFrame = timestamp;
+
+    // Slow ambient drift (the 道 wanders)
+    driftPhase += dt * 0.15;
+    driftX = Math.sin(driftPhase) * canvas.width * 0.015;
+    driftY = Math.cos(driftPhase * 0.7) * canvas.height * 0.01;
+
+    // Warmth — the 气 decays toward the 默 (0.15)
+    warmth = Math.max(0.15, warmth - dt * 0.08);
+
+    // Pressure — grows while holding, decays fast when released
+    if (gesturing) {
+      pressure = Math.min(1, pressure + dt * 0.5);
+    } else {
+      pressure = Math.max(0, pressure - dt * 2.5);
+    }
+
+    // Move the brush (drift + gesture)
+    bx += driftX * dt + (gesturing ? (Math.random() - 0.5) * 0.8 : 0);
+    by += driftY * dt + (gesturing ? (Math.random() - 0.5) * 0.8 : 0);
+
+    // Keep the brush in bounds
+    const margin = brushSize() * 1.5;
+    if (bx < margin) bx = margin;
+    if (bx > canvas.width - margin) bx = canvas.width - margin;
+    if (by < margin) by = margin;
+    if (by > canvas.height - margin) by = canvas.height - margin;
+
+    // Trail
+    const last = trail[trail.length - 1];
+    if (last && (Math.abs(bx - last.x) > 1.5 || Math.abs(by - last.y) > 1.5)) {
+      trail.push({ x: bx, y: by });
+      if (trail.length > MAX_TRAIL) trail.shift();
+    }
+
+    draw();
+
+    if (animId) animId = requestAnimationFrame(loop);
+  }
+
+  function startLoop() {
+    if (animId) return;
+    lastFrame = null;
+    animId = requestAnimationFrame(loop);
+  }
+
+  function stopLoop() {
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+  }
+
+  // ─── Gesture lifecycle ───
+  function startGesture() {
+    if (finished) return;
+    if (!audioCtx) ensureAudio();
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if (!started) {
+      started = true;
+      intro.style.display = 'none';
+      startLoop();
+    }
+    if (gesturing) return;
+    gesturing = true;
+    lastHoldStart = performance.now();
+    // Ramp the master gain in
+    if (master) {
+      const t = audioCtx.currentTime;
+      master.gain.cancelScheduledValues(t);
+      master.gain.setValueAtTime(master.gain.value, t);
+      master.gain.linearRampToValueAtTime(0.6, t + 0.08);
+    }
+  }
+
+  function releaseGesture() {
+    if (!gesturing) return;
+    gesturing = false;
+
+    const now = performance.now();
+    const intervalMs = now - lastHoldStart;
+
+    // Ramp the master gain out
+    if (master && audioCtx) {
+      const t = audioCtx.currentTime;
+      master.gain.cancelScheduledValues(t);
+      master.gain.setValueAtTime(master.gain.value, t);
+      master.gain.linearRampToValueAtTime(0, t + 0.3);
+    }
+
+    totalGestureMs += intervalMs;
+
+    // A gesture = a note, or a pause, or a rare flower
+    if (isFlower(intervalMs)) {
+      ctx.font = `${Math.max(14, canvas.width * 0.025)}px serif`;
+      ctx.fillStyle = '#4a2e6a';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('✿', bx, by);
+      const s = canvas.width * 0.01;
+      for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+        ctx.beginPath();
+        ctx.arc(bx + ox * s, by + oy * s, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#8b6aaa';
+        ctx.fill();
+      }
+      flowers++;
+      playFlower();
+      addRipple(bx, by, 10);
+    } else if (isPause(intervalMs)) {
+      const s = canvas.width * 0.008;
+      ctx.fillStyle = '#999';
+      for (const [ox, oy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+        ctx.beginPath();
+        ctx.arc(bx + ox * s, by + oy * s, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#999';
+        ctx.fill();
+      }
+      pauses++;
+      playPause();
+      addRipple(bx, by, 8);
+    } else {
+      gestures++;
+      playGesture(intervalMs);
+      spawnParticles(3, bx, by, 0.4);
+    }
+
+    lastHoldStart = now;
+    updateStatus();
+  }
+
+  function updateStatus() {
+    if (finished) return;
+    const totalS = (totalGestureMs / 1000).toFixed(1);
+    if (gestures === 0 && pauses === 0 && flowers === 0) {
+      status.textContent = 'Le vide attend.';
+    } else {
+      status.textContent = `${gestures} geste${gestures > 1 ? 's' : ''} · ${totalS}s · ${pauses} silence${pauses > 1 ? 's' : ''}${flowers ? ` · ${flowers} fleur${flowers > 1 ? 's' : ''}` : ''}`;
+    }
+  }
+
+  function finish() {
+    if (finished) return;
+    if (gesturing) releaseGesture();
+    finished = true;
+
+    // End point — a ring
+    ctx.beginPath();
+    ctx.arc(bx, by, 5, 0, Math.PI * 2);
+    ctx.strokeStyle = '#1a1a2e';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#faf8f4';
+    ctx.fill();
+
+    const totalS = (totalGestureMs / 1000).toFixed(1);
+    let summary;
+    if (gestures === 0) {
+      summary = "L'écoute n'a pas sonné. Elle reste.";
+    } else {
+      summary = `${gestures} geste${gestures > 1 ? 's' : ''} · ${totalS}s · ${pauses} silence${pauses > 1 ? 's' : ''}${flowers ? ` · ${flowers} fleur${flowers > 1 ? 's' : ''}` : ''}`;
+    }
+    status.textContent = summary;
+    philosophy.textContent = 'Votre écoute a sonné. Elle ne se refera pas. 道可道，非常道。';
+    intro.style.display = 'none';
+
+    // Let the animation run a few more seconds for the final ripples, then rest
+    setTimeout(() => {
+      stopLoop();
+      if (audioCtx) { audioCtx.close().catch(() => {}); audioCtx = null; }
+    }, 5000);
+  }
+
+  // ─── Input: click / touch / keyboard ───
+  canvas.addEventListener('mousedown', (e) => { e.preventDefault(); startGesture(); });
+  canvas.addEventListener('mouseup', (e) => { e.preventDefault(); releaseGesture(); });
+  canvas.addEventListener('mouseleave', () => { if (gesturing) releaseGesture(); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startGesture(); }, { passive: false });
+  canvas.addEventListener('touchend', (e) => { e.preventDefault(); releaseGesture(); }, { passive: false });
+
+  // Global keyboard: Space = gesture (hold), Escape = fin, letters = "fin"
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Escape') { finish(); return; }
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (!e.repeat) startGesture();
+      return;
+    }
+    if (e.key.length === 1 && e.key !== ' ') {
+      if (finished) return;
+      const k = e.key.toLowerCase();
+      finBuf += k;
+      if (finBuf.length > 3) finBuf = finBuf.slice(-3);
+      if (finBuf === 'fin') { finish(); return; }
+    }
+  });
+  document.addEventListener('keyup', function(e) {
+    if (e.key === ' ') {
+      e.preventDefault();
+      releaseGesture();
+    }
+  });
+
+  // Initial draw
+  draw();
+})();
+</script>
+</body>
+</html>
