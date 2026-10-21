@@ -590,12 +590,12 @@ section:last-child {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Interactive Creations — 行 · 破默之园 · 道 · 息 · דָּבַק · Ἐν · קָרָא
+   Interactive Creations — 行 · 破默之园 · 道 · 息 · דָּבַק · Ἐν · קָרָא · 玄 · 無
    Canvas frames, introductions, footers, input.
    Ink-wash aesthetic: paper frames, vermilion accents, breathing space.
    ═══════════════════════════════════════════════════════════════ */
 
-/* ─── Canvas frames (shared by xing / jardin / dao / xi / dabak / mono / kar / xuan) ─── */
+/* ─── Canvas frames (shared by xing / jardin / dao / xi / dabak / mono / kar / xuan / mu) ─── */
 .xing-canvas-wrap,
 .jardin-canvas-wrap,
 .dao-canvas-wrap,
@@ -603,7 +603,8 @@ section:last-child {
 .dabak-canvas-wrap,
 .mono-canvas-wrap,
 .kar-canvas-wrap,
-.xuan-canvas-wrap {
+.xuan-canvas-wrap,
+.mu-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -621,7 +622,8 @@ section:last-child {
 .dabak-canvas-wrap canvas,
 .mono-canvas-wrap canvas,
 .kar-canvas-wrap canvas,
-.xuan-canvas-wrap canvas {
+.xuan-canvas-wrap canvas,
+.mu-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -637,7 +639,8 @@ section:last-child {
 .dabak-intro,
 .mono-intro,
 .kar-intro,
-.xuan-intro {
+.xuan-intro,
+.mu-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -651,7 +654,8 @@ section:last-child {
 .dabak-intro p,
 .mono-intro p,
 .kar-intro p,
-.xuan-intro p {
+.xuan-intro p,
+.mu-intro p {
   margin: 0.8em 0;
 }
 
@@ -661,7 +665,8 @@ section:last-child {
 .dabak-intro,
 .mono-intro,
 .kar-intro,
-.xuan-intro {
+.xuan-intro,
+.mu-intro {
   line-height: 2.1;
   color: var(--ink-light);
 }
@@ -819,6 +824,20 @@ section:last-child {
   margin-top: 1.5em !important;
 }
 
+/* ─── 無 — rules & hint ─── */
+.mu-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.mu-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
 /* ─── Footers (shared shape) ─── */
 .xing-footer,
 .jardin-footer,
@@ -827,7 +846,8 @@ section:last-child {
 .dabak-footer,
 .mono-footer,
 .kar-footer,
-.xuan-footer {
+.xuan-footer,
+.mu-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -840,7 +860,8 @@ section:last-child {
 .dabak-footer p,
 .mono-footer p,
 .kar-footer p,
-.xuan-footer p {
+.xuan-footer p,
+.mu-footer p {
   margin: 0.5em 0;
 }
 
@@ -851,7 +872,8 @@ section:last-child {
 .dabak-philosophy,
 .mono-philosophy,
 .kar-philosophy,
-.xuan-philosophy {
+.xuan-philosophy,
+.mu-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -867,7 +889,8 @@ section:last-child {
   .dabak-canvas-wrap,
   .mono-canvas-wrap,
   .kar-canvas-wrap,
-  .xuan-canvas-wrap {
+  .xuan-canvas-wrap,
+  .mu-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -879,7 +902,8 @@ section:last-child {
   .dabak-intro,
   .mono-intro,
   .kar-intro,
-  .xuan-intro {
+  .xuan-intro,
+  .mu-intro {
     line-height: 1.9;
   }
 
