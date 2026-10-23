@@ -2,67 +2,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sofia-creative.vercel.app/</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/meditations/</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/livre/</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/dabak.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/dao.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sofia-creative.vercel.app/creations/he.html</loc>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/jardin.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/kar.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/mono.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/mu.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/xi.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/xing.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/creations/xuan.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -142,7 +147,7 @@
   </url>
   <url>
     <loc>https://sofia-creative.vercel.app/livre/liminaux.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <priority>0.9</priority>
   </url>
 </urlset>
