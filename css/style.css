@@ -590,7 +590,7 @@ section:last-child {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Interactive Creations — 行 · 破默之园 · 道 · 息 · דָּבַק · Ἐν · קָרָא · 玄 · 無 · 合
+   Interactive Creations — 行 · 破默之园 · 道 · 息 · דָּבַק · Ἐν · קָרָא · 玄 · 無 · 合 · 阈
    Canvas frames, introductions, footers, input.
    Ink-wash aesthetic: paper frames, vermilion accents, breathing space.
    ═══════════════════════════════════════════════════════════════ */
@@ -605,7 +605,8 @@ section:last-child {
 .kar-canvas-wrap,
 .xuan-canvas-wrap,
 .mu-canvas-wrap,
-.he-canvas-wrap {
+.he-canvas-wrap,
+.lim-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -625,7 +626,8 @@ section:last-child {
 .kar-canvas-wrap canvas,
 .xuan-canvas-wrap canvas,
 .mu-canvas-wrap canvas,
-.he-canvas-wrap canvas {
+.he-canvas-wrap canvas,
+.lim-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -643,7 +645,8 @@ section:last-child {
 .kar-intro,
 .xuan-intro,
 .mu-intro,
-.he-intro {
+.he-intro,
+.lim-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -659,8 +662,45 @@ section:last-child {
 .kar-intro p,
 .xuan-intro p,
 .mu-intro p,
-.he-intro p {
+.he-intro p,
+.lim-intro p {
   margin: 0.8em 0;
+}
+
+/* ─── 阈 — rules & hint ─── */
+.lim-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.lim-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
+.lim-article {
+  max-width: 620px;
+  margin: 3rem auto 0;
+}
+
+.lim-article h2 {
+  margin-top: 2.4em;
+}
+
+.lim-article .lim-verse {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--vermilion);
+  text-align: center;
+  margin-top: 2.5em;
+  letter-spacing: 0.1em;
+}
+
+.lim-score li {
+  margin-bottom: 0.7em;
 }
 
 /* ─── 合 — rules & hint ─── */
@@ -706,7 +746,8 @@ section:last-child {
 .mono-intro,
 .kar-intro,
 .xuan-intro,
-.mu-intro {
+.mu-intro,
+.lim-intro {
   line-height: 2.1;
   color: var(--ink-light);
 }
@@ -888,7 +929,8 @@ section:last-child {
 .kar-footer,
 .xuan-footer,
 .mu-footer,
-.he-footer {
+.he-footer,
+.lim-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -903,7 +945,8 @@ section:last-child {
 .kar-footer p,
 .xuan-footer p,
 .mu-footer p,
-.he-footer p {
+.he-footer p,
+.lim-footer p {
   margin: 0.5em 0;
 }
 
@@ -916,7 +959,8 @@ section:last-child {
 .kar-philosophy,
 .xuan-philosophy,
 .mu-philosophy,
-.he-philosophy {
+.he-philosophy,
+.lim-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -934,7 +978,8 @@ section:last-child {
   .kar-canvas-wrap,
   .xuan-canvas-wrap,
   .mu-canvas-wrap,
-  .he-canvas-wrap {
+  .he-canvas-wrap,
+  .lim-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -948,11 +993,13 @@ section:last-child {
   .kar-intro,
   .xuan-intro,
   .mu-intro,
-  .he-intro {
+  .he-intro,
+  .lim-intro {
     line-height: 1.9;
   }
 
-  .he-article {
+  .he-article,
+  .lim-article {
     margin-top: 2rem;
   }
 
