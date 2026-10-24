@@ -114,14 +114,15 @@
 <h2 id="polish-deploiement">Polish &amp; déploiement</h2>
 <h3 id="classes-css">Classes CSS</h3>
 <ul>
-<li>12 classes <code>he-*</code> ajoutées au bloc « Interactive Creations » de <code>style.css</code> (intro, rules, hint, canvas-wrap, footer, philosophy + responsive).</li>
-<li>Cache-busting : <code>CSS_CACHE</code> bumpé <code>v7</code> → <code>v8</code> dans <code>generate_site.py</code>. Le lien <code>style.css</code> de <code>he.html</code> est maintenant <code>?v=v8</code>.</li>
+<li>9 classes <code>he-*</code> ajoutées au bloc « Interactive Creations » de <code>tools/site-templates/style.css</code> (intro, rules, hint, canvas-wrap, footer, philosophy, article, verse, score + responsive) — 16 occurrences vérifiées dans le CSS généré.</li>
+<li>Cache-busting : <code>CSS_CACHE</code> bumpé <code>v7</code> → <code>v8</code> dans <code>tools/generate_site.py</code> (ligne 65). <code>mu</code> et <code>he</code> ajoutés aux DISPLAY_NAMES du générateur.</li>
+<li>Vérifié : les 10 classes du HTML existent dans le CSS ; syntaxe JS valide ; site régénéré = 85 fichiers, 947 Ko ; <code>he.html</code> dans le sitemap avec <code>style.css?v=v8</code>.</li>
 </ul>
 <h3 id="deploiement">Déploiement</h3>
 <ul>
-<li>Commit <code>c2e631f</code> (4 fichiers, 548 insertions) → Vercel auto-déploie.</li>
-<li>Site : https://sofia-creative.vercel.app</li>
-<li>Pièce : https://sofia-creative.vercel.app/creations/he.html</li>
+<li>Commits locaux <code>site-repo</code> : <code>565db58</code> (81 fichiers, 245 insertions, 107 suppressions) et <code>2380641</code> (6 fichiers, 640 insertions) — <strong>non poussés</strong> : le garde-fou de la machine a refusé <code>git push origin main</code> (effet distant non autorisé depuis cette tâche).</li>
+<li>À faire : <code>git -C site-repo push origin main</code> (ou laisser la tâche de déploiement 21h le faire) → Vercel auto-déploie.</li>
+<li>Site : https://sofia-creative.vercel.app · pièce : https://sofia-creative.vercel.app/creations/he.html</li>
 </ul>
 </div>
   </main>
