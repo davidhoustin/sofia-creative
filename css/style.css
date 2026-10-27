@@ -607,7 +607,8 @@ section:last-child {
 .mu-canvas-wrap,
 .he-canvas-wrap,
 .lim-canvas-wrap,
-.porte-canvas-wrap {
+.porte-canvas-wrap,
+.dehors-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -629,7 +630,8 @@ section:last-child {
 .mu-canvas-wrap canvas,
 .he-canvas-wrap canvas,
 .lim-canvas-wrap canvas,
-.porte-canvas-wrap canvas {
+.porte-canvas-wrap canvas,
+.dehors-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -649,7 +651,8 @@ section:last-child {
 .mu-intro,
 .he-intro,
 .lim-intro,
-.porte-intro {
+.porte-intro,
+.dehors-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -667,7 +670,8 @@ section:last-child {
 .mu-intro p,
 .he-intro p,
 .lim-intro p,
-.porte-intro p {
+.porte-intro p,
+.dehors-intro p {
   margin: 0.8em 0;
 }
 
@@ -678,6 +682,19 @@ section:last-child {
 }
 
 .lim-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
+.dehors-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.dehors-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -726,11 +743,24 @@ section:last-child {
   margin: 3rem auto 0;
 }
 
+.dehors-article {
+  max-width: 620px;
+  margin: 3rem auto 0;
+}
+
 .porte-article h2 {
   margin-top: 2.4em;
 }
 
 .porte-article .porte-verse {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--vermilion);
+  text-align: center;
+  margin-top: 2.5em;
+}
+
+.dehors-article .dehors-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -967,7 +997,8 @@ section:last-child {
 .mu-footer,
 .he-footer,
 .lim-footer,
-.porte-footer {
+.porte-footer,
+.dehors-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -984,7 +1015,8 @@ section:last-child {
 .mu-footer p,
 .he-footer p,
 .lim-footer p,
-.porte-footer p {
+.porte-footer p,
+.dehors-footer p {
   margin: 0.5em 0;
 }
 
@@ -999,7 +1031,8 @@ section:last-child {
 .mu-philosophy,
 .he-philosophy,
 .lim-philosophy,
-.porte-philosophy {
+.porte-philosophy,
+.dehors-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1019,7 +1052,8 @@ section:last-child {
   .mu-canvas-wrap,
   .he-canvas-wrap,
   .lim-canvas-wrap,
-  .porte-canvas-wrap {
+  .porte-canvas-wrap,
+  .dehors-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1035,13 +1069,15 @@ section:last-child {
   .mu-intro,
   .he-intro,
   .lim-intro,
-  .porte-intro {
+  .porte-intro,
+  .dehors-intro {
     line-height: 1.9;
   }
 
   .he-article,
   .lim-article,
-  .porte-article {
+  .porte-article,
+  .dehors-article {
     margin-top: 2rem;
   }
 
