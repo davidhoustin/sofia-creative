@@ -200,6 +200,8 @@
   }
 
   canvas.addEventListener('click', walk);
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); walk(); }, { passive: false });
+  canvas.addEventListener('touchend', (e) => { e.preventDefault(); }, { passive: false });
   draw();
 })();
 </script>

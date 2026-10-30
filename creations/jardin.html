@@ -273,6 +273,10 @@
     }
   });
 
+  // Mobile: tapping the canvas focuses the input field
+  canvas.addEventListener('click', () => { if (!finished) input.focus(); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); if (!finished) input.focus(); }, { passive: false });
+
   // Initial draw
   draw();
 })();

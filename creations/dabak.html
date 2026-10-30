@@ -28,6 +28,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400&display=swap">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/style.css?v=v13">
+  <style>
+    .dabak-hidden-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    @media (pointer: coarse) { .dabak-hidden-input { width: 100%; height: 100%; opacity: 0; pointer-events: auto; } }
+  </style>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "דָּבַק — L'Attache", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
 </head>
 <body>
@@ -59,6 +63,8 @@
     <div class="dabak-canvas-wrap">
       <canvas id="dabakCanvas" width="700" height="400" tabindex="0"
               aria-label="Canvas de l'attache — tapez pour écrire, les mots s'attachent les uns aux autres"></canvas>
+      <input type="text" id="dabakInput" class="dabak-hidden-input" autocomplete="off" spellcheck="false"
+             aria-label="Champ de saisie — tapez un mot">
     </div>
 
     <div class="dabak-footer">
@@ -314,6 +320,25 @@
 
   // Click to focus
   canvas.addEventListener('click', () => canvas.focus());
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); canvas.focus(); const inp = document.getElementById('dabakInput'); if (inp) inp.focus(); }, { passive: false });
+
+  // Mobile keyboard: route typed chars into the same handler
+  const dabakInput = document.getElementById('dabakInput');
+  if (dabakInput) {
+    dabakInput.addEventListener('input', function(e) {
+      if (finished) return;
+      const v = this.value;
+      this.value = '';
+      for (const ch of v) {
+        handleKey({ key: ch, preventDefault: () => {} });
+      }
+    });
+    dabakInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); finish(); }
+      else if (e.key === 'Backspace') { e.preventDefault(); handleKey({ key: 'Backspace', preventDefault: () => {} }); }
+      else if (e.key === ' ') { e.preventDefault(); handleKey({ key: ' ', preventDefault: () => {} }); }
+    });
+  }
 
   // Global keydown (no need to click first)
   document.addEventListener('keydown', function(e) {
