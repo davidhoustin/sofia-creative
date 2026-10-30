@@ -608,7 +608,8 @@ section:last-child {
 .he-canvas-wrap,
 .lim-canvas-wrap,
 .porte-canvas-wrap,
-.dehors-canvas-wrap {
+.dehors-canvas-wrap,
+.marche-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -631,7 +632,8 @@ section:last-child {
 .he-canvas-wrap canvas,
 .lim-canvas-wrap canvas,
 .porte-canvas-wrap canvas,
-.dehors-canvas-wrap canvas {
+.dehors-canvas-wrap canvas,
+.marche-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -652,7 +654,8 @@ section:last-child {
 .he-intro,
 .lim-intro,
 .porte-intro,
-.dehors-intro {
+.dehors-intro,
+.marche-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -671,7 +674,8 @@ section:last-child {
 .he-intro p,
 .lim-intro p,
 .porte-intro p,
-.dehors-intro p {
+.dehors-intro p,
+.marche-intro p {
   margin: 0.8em 0;
 }
 
@@ -689,12 +693,14 @@ section:last-child {
   margin-top: 1.5em !important;
 }
 
-.dehors-rules {
+.dehors-rules,
+.marche-rules {
   color: var(--ink);
   font-style: italic;
 }
 
-.dehors-hint {
+.dehors-hint,
+.marche-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -743,7 +749,8 @@ section:last-child {
   margin: 3rem auto 0;
 }
 
-.dehors-article {
+.dehors-article,
+.marche-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -760,7 +767,8 @@ section:last-child {
   margin-top: 2.5em;
 }
 
-.dehors-article .dehors-verse {
+.dehors-article .dehors-verse,
+.marche-article .marche-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -998,7 +1006,8 @@ section:last-child {
 .he-footer,
 .lim-footer,
 .porte-footer,
-.dehors-footer {
+.dehors-footer,
+.marche-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1016,7 +1025,8 @@ section:last-child {
 .he-footer p,
 .lim-footer p,
 .porte-footer p,
-.dehors-footer p {
+.dehors-footer p,
+.marche-footer p {
   margin: 0.5em 0;
 }
 
@@ -1032,7 +1042,8 @@ section:last-child {
 .he-philosophy,
 .lim-philosophy,
 .porte-philosophy,
-.dehors-philosophy {
+.dehors-philosophy,
+.marche-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1053,7 +1064,8 @@ section:last-child {
   .he-canvas-wrap,
   .lim-canvas-wrap,
   .porte-canvas-wrap,
-  .dehors-canvas-wrap {
+  .dehors-canvas-wrap,
+  .marche-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1070,7 +1082,8 @@ section:last-child {
   .he-intro,
   .lim-intro,
   .porte-intro,
-  .dehors-intro {
+  .dehors-intro,
+  .marche-intro {
     line-height: 1.9;
   }
 
