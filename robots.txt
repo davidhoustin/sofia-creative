@@ -1,4 +1,30 @@
 User-agent: *
 Allow: /
 
+# Google-Extended trains AI models — not allowed for this site's content
+User-agent: Google-Extended
+Disallow: /
+
+# OpenAI GPTBot — same reason
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic Claude — same reason
+User-agent: Claude-Web
+Disallow: /
+User-agent: Claude-Search
+Disallow: /
+User-agent: Claude-User
+Disallow: /
+User-agent: Claude-Code
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+# Common Crawl
+User-agent: CCBot
+Disallow: /
+
 Sitemap: https://sofia-creative.vercel.app/sitemap.xml
