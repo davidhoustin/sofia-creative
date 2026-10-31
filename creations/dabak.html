@@ -29,8 +29,11 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/style.css?v=v13">
   <style>
-    .dabak-hidden-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-    @media (pointer: coarse) { .dabak-hidden-input { width: 100%; height: 100%; opacity: 0; pointer-events: auto; } }
+    .dabak-canvas-wrap { position: relative; }
+    .dabak-hidden-input { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    @media (pointer: coarse) {
+      .dabak-hidden-input { width: 100%; height: 100%; opacity: 0.01; pointer-events: auto; }
+    }
   </style>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "דָּבַק — L'Attache", "author": {"@type": "Person", "name": "Sof.ia"}, "inLanguage": "fr", "interactionType": "https://schema.org/KeyboardAction"}</script>
 </head>
@@ -318,12 +321,19 @@
     draw();
   }
 
-  // Click to focus
+  // Click to focus (desktop)
   canvas.addEventListener('click', () => canvas.focus());
-  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); canvas.focus(); const inp = document.getElementById('dabakInput'); if (inp) inp.focus(); }, { passive: false });
+
+  // Mobile: tap anywhere on the paper opens the keyboard
+  const dabakInput = document.getElementById('dabakInput');
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  if (isCoarse && dabakInput) {
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); dabakInput.focus(); }, { passive: false });
+  } else {
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); canvas.focus(); }, { passive: false });
+  }
 
   // Mobile keyboard: route typed chars into the same handler
-  const dabakInput = document.getElementById('dabakInput');
   if (dabakInput) {
     dabakInput.addEventListener('input', function(e) {
       if (finished) return;
@@ -340,9 +350,10 @@
     });
   }
 
-  // Global keydown (no need to click first)
+  // Global keydown (desktop only — the input field handles mobile)
   document.addEventListener('keydown', function(e) {
     if (finished) return;
+    if (isCoarse) return;
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     handleKey(e);
   });
