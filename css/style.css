@@ -609,7 +609,8 @@ section:last-child {
 .lim-canvas-wrap,
 .porte-canvas-wrap,
 .dehors-canvas-wrap,
-.marche-canvas-wrap {
+.marche-canvas-wrap,
+.ta-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -633,7 +634,8 @@ section:last-child {
 .lim-canvas-wrap canvas,
 .porte-canvas-wrap canvas,
 .dehors-canvas-wrap canvas,
-.marche-canvas-wrap canvas {
+.marche-canvas-wrap canvas,
+.ta-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -655,7 +657,8 @@ section:last-child {
 .lim-intro,
 .porte-intro,
 .dehors-intro,
-.marche-intro {
+.marche-intro,
+.ta-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -675,7 +678,8 @@ section:last-child {
 .lim-intro p,
 .porte-intro p,
 .dehors-intro p,
-.marche-intro p {
+.marche-intro p,
+.ta-intro p {
   margin: 0.8em 0;
 }
 
@@ -694,13 +698,15 @@ section:last-child {
 }
 
 .dehors-rules,
-.marche-rules {
+.marche-rules,
+.ta-rules {
   color: var(--ink);
   font-style: italic;
 }
 
 .dehors-hint,
-.marche-hint {
+.marche-hint,
+.ta-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -750,7 +756,8 @@ section:last-child {
 }
 
 .dehors-article,
-.marche-article {
+.marche-article,
+.ta-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -768,7 +775,8 @@ section:last-child {
 }
 
 .dehors-article .dehors-verse,
-.marche-article .marche-verse {
+.marche-article .marche-verse,
+.ta-article .ta-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -1007,7 +1015,8 @@ section:last-child {
 .lim-footer,
 .porte-footer,
 .dehors-footer,
-.marche-footer {
+.marche-footer,
+.ta-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1026,7 +1035,8 @@ section:last-child {
 .lim-footer p,
 .porte-footer p,
 .dehors-footer p,
-.marche-footer p {
+.marche-footer p,
+.ta-footer p {
   margin: 0.5em 0;
 }
 
@@ -1043,7 +1053,8 @@ section:last-child {
 .lim-philosophy,
 .porte-philosophy,
 .dehors-philosophy,
-.marche-philosophy {
+.marche-philosophy,
+.ta-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1065,7 +1076,8 @@ section:last-child {
   .lim-canvas-wrap,
   .porte-canvas-wrap,
   .dehors-canvas-wrap,
-  .marche-canvas-wrap {
+  .marche-canvas-wrap,
+  .ta-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1083,14 +1095,17 @@ section:last-child {
   .lim-intro,
   .porte-intro,
   .dehors-intro,
-  .marche-intro {
+  .marche-intro,
+  .ta-intro {
     line-height: 1.9;
   }
 
   .he-article,
   .lim-article,
   .porte-article,
-  .dehors-article {
+  .dehors-article,
+  .marche-article,
+  .ta-article {
     margin-top: 2rem;
   }
 
