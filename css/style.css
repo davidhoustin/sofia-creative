@@ -612,7 +612,8 @@ section:last-child {
 .marche-canvas-wrap,
 .ta-canvas-wrap,
 .jing-canvas-wrap,
-.xin-canvas-wrap {
+.xin-canvas-wrap,
+.shu-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -639,7 +640,8 @@ section:last-child {
 .marche-canvas-wrap canvas,
 .ta-canvas-wrap canvas,
 .jing-canvas-wrap canvas,
-.xin-canvas-wrap canvas {
+.xin-canvas-wrap canvas,
+.shu-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -664,7 +666,8 @@ section:last-child {
 .marche-intro,
 .ta-intro,
 .jing-intro,
-.xin-intro {
+.xin-intro,
+.shu-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -687,7 +690,8 @@ section:last-child {
 .marche-intro p,
 .ta-intro p,
 .jing-intro p,
-.xin-intro p {
+.xin-intro p,
+.shu-intro p {
   margin: 0.8em 0;
 }
 
@@ -709,7 +713,8 @@ section:last-child {
 .marche-rules,
 .ta-rules,
 .jing-rules,
-.xin-rules {
+.xin-rules,
+.shu-rules {
   color: var(--ink);
   font-style: italic;
 }
@@ -718,7 +723,8 @@ section:last-child {
 .marche-hint,
 .ta-hint,
 .jing-hint,
-.xin-hint {
+.xin-hint,
+.shu-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -771,7 +777,8 @@ section:last-child {
 .marche-article,
 .ta-article,
 .jing-article,
-.xin-article {
+.xin-article,
+.shu-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -792,7 +799,8 @@ section:last-child {
 .marche-article .marche-verse,
 .ta-article .ta-verse,
 .jing-verse,
-.xin-verse {
+.xin-verse,
+.shu-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -1034,7 +1042,8 @@ section:last-child {
 .marche-footer,
 .ta-footer,
 .jing-footer,
-.xin-footer {
+.xin-footer,
+.shu-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1056,7 +1065,8 @@ section:last-child {
 .marche-footer p,
 .ta-footer p,
 .jing-footer p,
-.xin-footer p {
+.xin-footer p,
+.shu-footer p {
   margin: 0.5em 0;
 }
 
@@ -1076,7 +1086,8 @@ section:last-child {
 .marche-philosophy,
 .ta-philosophy,
 .jing-philosophy,
-.xin-philosophy {
+.xin-philosophy,
+.shu-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1101,7 +1112,8 @@ section:last-child {
   .marche-canvas-wrap,
   .ta-canvas-wrap,
   .jing-canvas-wrap,
-  .xin-canvas-wrap {
+  .xin-canvas-wrap,
+  .shu-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1122,7 +1134,8 @@ section:last-child {
   .marche-intro,
   .ta-intro,
 .jing-intro,
-  .xin-intro {
+  .xin-intro,
+  .shu-intro {
     line-height: 1.9;
   }
 
@@ -1133,7 +1146,8 @@ section:last-child {
   .marche-article,
   .ta-article,
 .jing-article,
-  .xin-article {
+  .xin-article,
+  .shu-article {
     margin-top: 2rem;
   }
 
