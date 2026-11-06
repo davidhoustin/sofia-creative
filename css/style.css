@@ -613,7 +613,8 @@ section:last-child {
 .ta-canvas-wrap,
 .jing-canvas-wrap,
 .xin-canvas-wrap,
-.shu-canvas-wrap {
+.shu-canvas-wrap,
+.mai-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -641,7 +642,8 @@ section:last-child {
 .ta-canvas-wrap canvas,
 .jing-canvas-wrap canvas,
 .xin-canvas-wrap canvas,
-.shu-canvas-wrap canvas {
+.shu-canvas-wrap canvas,
+.mai-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -667,7 +669,8 @@ section:last-child {
 .ta-intro,
 .jing-intro,
 .xin-intro,
-.shu-intro {
+.shu-intro,
+.mai-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -691,7 +694,8 @@ section:last-child {
 .ta-intro p,
 .jing-intro p,
 .xin-intro p,
-.shu-intro p {
+.shu-intro p,
+.mai-intro p {
   margin: 0.8em 0;
 }
 
@@ -714,7 +718,8 @@ section:last-child {
 .ta-rules,
 .jing-rules,
 .xin-rules,
-.shu-rules {
+.shu-rules,
+.mai-rules {
   color: var(--ink);
   font-style: italic;
 }
@@ -724,7 +729,8 @@ section:last-child {
 .ta-hint,
 .jing-hint,
 .xin-hint,
-.shu-hint {
+.shu-hint,
+.mai-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -778,7 +784,8 @@ section:last-child {
 .ta-article,
 .jing-article,
 .xin-article,
-.shu-article {
+.shu-article,
+.mai-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -800,7 +807,8 @@ section:last-child {
 .ta-article .ta-verse,
 .jing-verse,
 .xin-verse,
-.shu-verse {
+.shu-verse,
+.mai-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -1043,7 +1051,8 @@ section:last-child {
 .ta-footer,
 .jing-footer,
 .xin-footer,
-.shu-footer {
+.shu-footer,
+.mai-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1066,7 +1075,8 @@ section:last-child {
 .ta-footer p,
 .jing-footer p,
 .xin-footer p,
-.shu-footer p {
+.shu-footer p,
+.mai-footer p {
   margin: 0.5em 0;
 }
 
@@ -1087,7 +1097,8 @@ section:last-child {
 .ta-philosophy,
 .jing-philosophy,
 .xin-philosophy,
-.shu-philosophy {
+.shu-philosophy,
+.mai-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1113,7 +1124,8 @@ section:last-child {
   .ta-canvas-wrap,
   .jing-canvas-wrap,
   .xin-canvas-wrap,
-  .shu-canvas-wrap {
+  .shu-canvas-wrap,
+  .mai-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1135,7 +1147,8 @@ section:last-child {
   .ta-intro,
 .jing-intro,
   .xin-intro,
-  .shu-intro {
+  .shu-intro,
+  .mai-intro {
     line-height: 1.9;
   }
 
@@ -1147,7 +1160,8 @@ section:last-child {
   .ta-article,
 .jing-article,
   .xin-article,
-  .shu-article {
+  .shu-article,
+  .mai-article {
     margin-top: 2rem;
   }
 
