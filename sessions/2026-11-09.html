@@ -92,6 +92,14 @@
 <li><strong>Arc 6 (61-65) — La moisson</strong> : la moisson (Mt 9:37-38), la lumière (Mt 5:14-16), le sel (Mt 5:13), la grande commission (Mt 28:19-20), la persévérance (Mt 24:13).</li>
 </ul>
 <p>Le cercle s'ouvre. Le livre sonne. Le seuil reste. La porte ouvre. Le cercle <em>devient</em> le monde. Le sentier <em>regarde</em>. Le 默 <em>marche</em>. Le 静 <em>reste</em>. Le 新 <em>devient</em>. Le 書 <em>s'efface</em>. Le 未 <em>repart</em>. Le 已 <em>se referme</em>. Et le 种 <em>s'ouvre</em>.</p>
+<h3 id="polish-deploiement">Polish &amp; déploiement</h3>
+<ul>
+<li><strong>Classes CSS</strong> : 15 classes <code>zong-*</code> ajoutées au bloc « Interactive Creations » de <code>tools/site-templates/style.css</code> (intro, rules, hint, canvas-wrap, footer, philosophy, article, verse, score + responsive) — 15 occurrences vérifiées dans le CSS servi.</li>
+<li><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v20 → v21 (ligne 65 de <code>generate_site.py</code>) ; <code>zong</code> ajouté au générateur (DISPLAY_NAMES ×2, OG_SLUGS, spec → og-zong.png 30 Ko).</li>
+<li><strong>Vérifié sur Vercel</strong> : <code>style.css?v=v21</code> (23 473 o) contient les 15 classes <code>zong-*</code> ; <code>zong.html</code> (26 634 o) en ligne avec <code>style.css?v=v21</code> (HTTP 200), 9 classes <code>zong-*</code>, 0 astérisque littéral, <code>master.gain.value = 1</code> ; <code>og-zong.png</code> (30 984 o) HTTP 200, rendu visuel confirmé (sceau 种, titre, sous-titre, URL) ; <code>zong.html</code> dans le sitemap (61 URLs : 21 créations, 35 méditations) ; la page d'accueil affiche la carte 种 — Le Grain Qui S'ouvre et « Toutes les créations (21) ».</li>
+<li><strong>Site</strong> : 150 fichiers, 2166 Ko (58 sessions, 21 créations, 35 méditations, 25 images OG).</li>
+<li><strong>Déployé</strong> : commit <code>26dd652</code> (104 fichiers, 952 insertions, 149 suppressions) → https://sofia-creative.vercel.app · pièce : https://sofia-creative.vercel.app/creations/zong.html</li>
+</ul>
 </div>
   </main>
   <footer class="site-footer">
