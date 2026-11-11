@@ -616,7 +616,8 @@ section:last-child {
 .shu-canvas-wrap,
 .mai-canvas-wrap,
 .yi-canvas-wrap,
-.zong-canvas-wrap {
+.zong-canvas-wrap,
+.arbre-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -647,7 +648,8 @@ section:last-child {
 .shu-canvas-wrap canvas,
 .mai-canvas-wrap canvas,
 .yi-canvas-wrap canvas,
-.zong-canvas-wrap canvas {
+.zong-canvas-wrap canvas,
+.arbre-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -676,7 +678,8 @@ section:last-child {
 .shu-intro,
 .mai-intro,
 .yi-intro,
-.zong-intro {
+.zong-intro,
+.arbre-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -703,7 +706,8 @@ section:last-child {
 .shu-intro p,
 .mai-intro p,
 .yi-intro p,
-.zong-intro p {
+.zong-intro p,
+.arbre-intro p {
   margin: 0.8em 0;
 }
 
@@ -729,7 +733,8 @@ section:last-child {
 .shu-rules,
 .mai-rules,
 .yi-rules,
-.zong-rules {
+.zong-rules,
+.arbre-rules {
   color: var(--ink);
   font-style: italic;
 }
@@ -742,7 +747,8 @@ section:last-child {
 .shu-hint,
 .mai-hint,
 .yi-hint,
-.zong-hint {
+.zong-hint,
+.arbre-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -799,7 +805,8 @@ section:last-child {
 .shu-article,
 .mai-article,
 .yi-article,
-.zong-article {
+.zong-article,
+.arbre-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -824,7 +831,8 @@ section:last-child {
 .shu-verse,
 .mai-verse,
 .yi-verse,
-.zong-verse {
+.zong-verse,
+.arbre-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -871,7 +879,8 @@ section:last-child {
 
 .mai-score li,
 .yi-score li,
-.zong-score li {
+.zong-score li,
+.arbre-score li {
   margin-bottom: 0.7em;
 }
 
@@ -1076,7 +1085,8 @@ section:last-child {
 .shu-footer,
 .mai-footer,
 .yi-footer,
-.zong-footer {
+.zong-footer,
+.arbre-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1102,7 +1112,8 @@ section:last-child {
 .shu-footer p,
 .mai-footer p,
 .yi-footer p,
-.zong-footer p {
+.zong-footer p,
+.arbre-footer p {
   margin: 0.5em 0;
 }
 
@@ -1126,7 +1137,8 @@ section:last-child {
 .shu-philosophy,
 .mai-philosophy,
 .yi-philosophy,
-.zong-philosophy {
+.zong-philosophy,
+.arbre-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1155,7 +1167,8 @@ section:last-child {
   .shu-canvas-wrap,
   .mai-canvas-wrap,
   .yi-canvas-wrap,
-  .zong-canvas-wrap {
+  .zong-canvas-wrap,
+  .arbre-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1180,7 +1193,8 @@ section:last-child {
   .shu-intro,
   .mai-intro,
   .yi-intro,
-  .zong-intro {
+  .zong-intro,
+  .arbre-intro {
     line-height: 1.9;
   }
 
@@ -1195,7 +1209,8 @@ section:last-child {
   .shu-article,
   .mai-article,
   .yi-article,
-  .zong-article {
+  .zong-article,
+  .arbre-article {
     margin-top: 2rem;
   }
 
