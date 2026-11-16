@@ -631,7 +631,8 @@ section:last-child {
 }
 
 .tian-canvas-wrap,
-.ciel-canvas-wrap {
+.ciel-canvas-wrap,
+.feng-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -667,7 +668,8 @@ section:last-child {
 .quan-canvas-wrap canvas,
 .chuan-canvas-wrap canvas,
 .tian-canvas-wrap canvas,
-.ciel-canvas-wrap canvas {
+.ciel-canvas-wrap canvas,
+.feng-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -701,7 +703,8 @@ section:last-child {
 .quan-intro,
 .chuan-intro,
 .tian-intro,
-.ciel-intro {
+.ciel-intro,
+.feng-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -733,7 +736,8 @@ section:last-child {
 .quan-intro p,
 .chuan-intro p,
 .tian-intro p,
-.ciel-intro p {
+.ciel-intro p,
+.feng-intro p {
   margin: 0.8em 0;
 }
 
@@ -764,7 +768,8 @@ section:last-child {
 .quan-rules,
 .chuan-rules,
 .tian-rules,
-.ciel-rules {
+.ciel-rules,
+.feng-rules {
   color: var(--ink);
   font-style: italic;
 }
@@ -782,7 +787,8 @@ section:last-child {
 .quan-hint,
 .chuan-hint,
 .tian-hint,
-.ciel-hint {
+.ciel-hint,
+.feng-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -844,7 +850,8 @@ section:last-child {
 .quan-article,
 .chuan-article,
 .tian-article,
-.ciel-article {
+.ciel-article,
+.feng-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -874,7 +881,8 @@ section:last-child {
 .quan-verse,
 .chuan-verse,
 .tian-verse,
-.ciel-verse {
+.ciel-verse,
+.feng-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -926,7 +934,8 @@ section:last-child {
 .quan-score li,
 .chuan-score li,
 .tian-score li,
-.ciel-score li {
+.ciel-score li,
+.feng-score li {
   margin-bottom: 0.7em;
 }
 
@@ -1141,7 +1150,8 @@ section:last-child {
 }
 
 .tian-footer,
-.ciel-footer {
+.ciel-footer,
+.feng-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1172,7 +1182,8 @@ section:last-child {
 .quan-footer p,
 .chuan-footer p,
 .tian-footer p,
-.ciel-footer p {
+.ciel-footer p,
+.feng-footer p {
   margin: 0.5em 0;
 }
 
@@ -1201,7 +1212,8 @@ section:last-child {
 .quan-philosophy,
 .chuan-philosophy,
 .tian-philosophy,
-.ciel-philosophy {
+.ciel-philosophy,
+.feng-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1235,7 +1247,8 @@ section:last-child {
   .quan-canvas-wrap,
   .chuan-canvas-wrap,
   .tian-canvas-wrap,
-  .ciel-canvas-wrap {
+  .ciel-canvas-wrap,
+  .feng-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1265,7 +1278,8 @@ section:last-child {
   .quan-intro,
   .chuan-intro,
   .tian-intro,
-  .ciel-intro {
+  .ciel-intro,
+  .feng-intro {
     line-height: 1.9;
   }
 
@@ -1285,7 +1299,8 @@ section:last-child {
   .quan-article,
   .chuan-article,
   .tian-article,
-  .ciel-article {
+  .ciel-article,
+  .feng-article {
     margin-top: 2rem;
   }
 
