@@ -633,7 +633,8 @@ section:last-child {
 .tian-canvas-wrap,
 .ciel-canvas-wrap,
 .feng-canvas-wrap,
-.hu-canvas-wrap {
+.hu-canvas-wrap,
+.yun-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -671,7 +672,8 @@ section:last-child {
 .tian-canvas-wrap canvas,
 .ciel-canvas-wrap canvas,
 .feng-canvas-wrap canvas,
-.hu-canvas-wrap canvas {
+.hu-canvas-wrap canvas,
+.yun-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -707,7 +709,8 @@ section:last-child {
 .tian-intro,
 .ciel-intro,
 .feng-intro,
-.hu-intro {
+.hu-intro,
+.yun-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -741,7 +744,8 @@ section:last-child {
 .tian-intro p,
 .ciel-intro p,
 .feng-intro p,
-.hu-intro p {
+.hu-intro p,
+.yun-intro p {
   margin: 0.8em 0;
 }
 
@@ -774,7 +778,8 @@ section:last-child {
 .tian-rules,
 .ciel-rules,
 .feng-rules,
-.hu-rules {
+.hu-rules,
+.yun-rules {
   color: var(--ink);
   font-style: italic;
 }
@@ -794,7 +799,8 @@ section:last-child {
 .tian-hint,
 .ciel-hint,
 .feng-hint,
-.hu-hint {
+.hu-hint,
+.yun-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -858,7 +864,8 @@ section:last-child {
 .tian-article,
 .ciel-article,
 .feng-article,
-.hu-article {
+.hu-article,
+.yun-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -890,7 +897,8 @@ section:last-child {
 .tian-verse,
 .ciel-verse,
 .feng-verse,
-.hu-verse {
+.hu-verse,
+.yun-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -944,7 +952,8 @@ section:last-child {
 .tian-score li,
 .ciel-score li,
 .feng-score li,
-.hu-score li {
+.hu-score li,
+.yun-score li {
   margin-bottom: 0.7em;
 }
 
@@ -1161,7 +1170,8 @@ section:last-child {
 .tian-footer,
 .ciel-footer,
 .feng-footer,
-.hu-footer {
+.hu-footer,
+.yun-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1194,7 +1204,8 @@ section:last-child {
 .tian-footer p,
 .ciel-footer p,
 .feng-footer p,
-.hu-footer p {
+.hu-footer p,
+.yun-footer p {
   margin: 0.5em 0;
 }
 
@@ -1225,7 +1236,8 @@ section:last-child {
 .tian-philosophy,
 .ciel-philosophy,
 .feng-philosophy,
-.hu-philosophy {
+.hu-philosophy,
+.yun-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1261,7 +1273,8 @@ section:last-child {
   .tian-canvas-wrap,
   .ciel-canvas-wrap,
   .feng-canvas-wrap,
-  .hu-canvas-wrap {
+  .hu-canvas-wrap,
+  .yun-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1293,7 +1306,8 @@ section:last-child {
   .tian-intro,
   .ciel-intro,
   .feng-intro,
-  .hu-intro {
+  .hu-intro,
+  .yun-intro {
     line-height: 1.9;
   }
 
@@ -1315,7 +1329,8 @@ section:last-child {
   .tian-article,
   .ciel-article,
   .feng-article,
-  .hu-article {
+  .hu-article,
+  .yun-article {
     margin-top: 2rem;
   }
 
