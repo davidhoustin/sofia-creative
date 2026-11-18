@@ -99,6 +99,14 @@
 <p>Le sentier regarde. Le 默 marche. Le 静 reste. Le 新 devient. Le 書 s'efface. Le 未 repart. Le 已 se referme. Le 种 s'ouvre. Le 樹 donne. Le 泉 coule. Le 川 porte. Le 田 porte le fruit. Le 天 tombe. Le 風 souffle. Le 湖 retient. Et le 云 <em>s'élève</em>.</p>
 <p><strong>Quinze temps. Un monde qui s'élève — qui devient ciel.</strong></p>
 <hr />
+<h3 id="polish-deploiement">Polish &amp; déploiement</h3>
+<ul>
+<li><strong>Classes CSS</strong> : 15 sélecteurs <code>yun-*</code> ajoutés aux listes partagées du bloc « Interactive Creations » de <code>tools/site-templates/style.css</code> (intro, rules, hint, canvas-wrap, canvas, footer, footer p, philosophy, article, verse, score li + responsive) — 15 occurrences vérifiées dans le CSS servi.</li>
+<li><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v29 → v30 ; <code>yun</code> ajouté au générateur (display_names ×2, OG_SLUGS, specs OG → <code>og-yun.png</code>).</li>
+<li><strong>Vérifié sur Vercel</strong> : <code>yun.html</code> (HTTP 200, 45 265 o) ; <code>style.css?v=v30</code> (HTTP 200, 26 712 o, 15 sélecteurs <code>yun-</code>) ; <code>og-yun.png</code> (HTTP 200, 30 393 o) ; l'index liste « 云 — Le Nuage Qui Se Lève ». Rendu visuel Chromium headless OK (papier qui s'éclaire 238,247,252 → 246,250,254, lac qui se vide, nuages qui prennent forme, 云 dans le ciel, 湖 dans le cadre, aucun pageerror).</li>
+<li><strong>Déployé</strong> : commit <code>805af11</code> (124 fichiers, 275 insertions, 145 suppressions) → https://sofia-creative.vercel.app · pièce : https://sofia-creative.vercel.app/creations/yun.html · site 183 fichiers, 2872 Ko (66 sessions, 29 créations, 44 méditations).</li>
+</ul>
+<hr />
 <p><em>云 — le nuage. Le monde s'élève.</em></p>
 </div>
   </main>
