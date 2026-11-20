@@ -635,7 +635,8 @@ section:last-child {
 .feng-canvas-wrap,
 .hu-canvas-wrap,
 .yun-canvas-wrap,
-.yu-canvas-wrap {
+.yu-canvas-wrap,
+.di-canvas-wrap {
   margin: 2.5rem auto;
   padding: 14px;
   background: var(--paper-warm);
@@ -675,7 +676,8 @@ section:last-child {
 .feng-canvas-wrap canvas,
 .hu-canvas-wrap canvas,
 .yun-canvas-wrap canvas,
-.yu-canvas-wrap canvas {
+.yu-canvas-wrap canvas,
+.di-canvas-wrap canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -713,7 +715,8 @@ section:last-child {
 .feng-intro,
 .hu-intro,
 .yun-intro,
-.yu-intro {
+.yu-intro,
+.di-intro {
   margin: 0 auto 2rem;
   max-width: 560px;
   text-align: center;
@@ -749,7 +752,8 @@ section:last-child {
 .feng-intro p,
 .hu-intro p,
 .yun-intro p,
-.yu-intro p {
+.yu-intro p,
+.di-intro p {
   margin: 0.8em 0;
 }
 
@@ -784,7 +788,8 @@ section:last-child {
 .feng-rules,
 .hu-rules,
 .yun-rules,
-.yu-rules {
+.yu-rules,
+.di-rules {
   color: var(--ink);
   font-style: italic;
 }
@@ -806,7 +811,8 @@ section:last-child {
 .feng-hint,
 .hu-hint,
 .yun-hint,
-.yu-hint {
+.yu-hint,
+.di-hint {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--jade);
@@ -872,7 +878,8 @@ section:last-child {
 .feng-article,
 .hu-article,
 .yun-article,
-.yu-article {
+.yu-article,
+.di-article {
   max-width: 620px;
   margin: 3rem auto 0;
 }
@@ -906,7 +913,8 @@ section:last-child {
 .feng-verse,
 .hu-verse,
 .yun-verse,
-.yu-verse {
+.yu-verse,
+.di-verse {
   font-family: var(--font-display);
   font-size: 1.3rem;
   color: var(--vermilion);
@@ -962,7 +970,8 @@ section:last-child {
 .feng-score li,
 .hu-score li,
 .yun-score li,
-.yu-score li {
+.yu-score li,
+.di-score li {
   margin-bottom: 0.7em;
 }
 
@@ -1181,7 +1190,8 @@ section:last-child {
 .feng-footer,
 .hu-footer,
 .yun-footer,
-.yu-footer {
+.yu-footer,
+.di-footer {
   margin: 2rem auto 0;
   max-width: 560px;
   text-align: center;
@@ -1216,7 +1226,8 @@ section:last-child {
 .feng-footer p,
 .hu-footer p,
 .yun-footer p,
-.yu-footer p {
+.yu-footer p,
+.di-footer p {
   margin: 0.5em 0;
 }
 
@@ -1249,7 +1260,8 @@ section:last-child {
 .feng-philosophy,
 .hu-philosophy,
 .yun-philosophy,
-.yu-philosophy {
+.yu-philosophy,
+.di-philosophy {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--ink-faint);
@@ -1287,7 +1299,8 @@ section:last-child {
   .feng-canvas-wrap,
   .hu-canvas-wrap,
   .yun-canvas-wrap,
-  .yu-canvas-wrap {
+  .yu-canvas-wrap,
+  .di-canvas-wrap {
     padding: 10px;
     margin: 2rem auto;
   }
@@ -1321,7 +1334,8 @@ section:last-child {
   .feng-intro,
   .hu-intro,
   .yun-intro,
-  .yu-intro {
+  .yu-intro,
+  .di-intro {
     line-height: 1.9;
   }
 
@@ -1345,7 +1359,8 @@ section:last-child {
   .feng-article,
   .hu-article,
   .yun-article,
-  .yu-article {
+  .yu-article,
+  .di-article {
     margin-top: 2rem;
   }
 
