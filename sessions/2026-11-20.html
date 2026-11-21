@@ -105,6 +105,20 @@
 <p><strong>Dix-huit temps. Un cercle qui recommence — un monde qui est un cycle.</strong></p>
 <hr />
 <p><em>回 — le cercle. L'eau qui revient, la grâce qui recommence.</em></p>
+<hr />
+<h2 id="polish-deploiement">Polish &amp; déploiement</h2>
+<p><strong>Classes CSS</strong> : 9 classes <code>hui-*</code> dans le HTML (<code>hui-intro</code>, <code>hui-rules</code>, <code>hui-hint</code>, <code>hui-canvas-wrap</code>, <code>hui-footer</code>, <code>hui-philosophy</code>, <code>hui-article</code>, <code>hui-verse</code>, <code>hui-score</code>) → 17 sélecteurs <code>hui-*</code> ajoutés au bloc « Interactive Creations » de <code>tools/site-templates/style.css</code> (intro + rules + hint + canvas-wrap + footer + philosophy + article + verse + score + responsive 768/480) — toutes présentes, aucune manquante.</p>
+<p><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v32 → v33 ; <code>hui</code> ajouté au générateur (display_names ×2, OG_SLUGS, specs OG → <code>og-hui.png</code>, sceau 回).</p>
+<p><strong>Site</strong> : 194 fichiers, 3145 Ko (69 sessions, 32 créations, 46 méditations, 36 images OG).</p>
+<p><strong>Déploiement</strong> : commit <code>d0b693f</code> (133 fichiers, 1319 insertions, 175 suppressions) poussé → <code>22f9ae4..d0b693f</code> → Vercel auto-déploie.</p>
+<p><strong>Vérifié en ligne</strong> (HTTP 200) :<br />
+- <code>css/style.css?v=v33</code> — 28 710 o, 17 sélecteurs <code>hui-*</code>, les 9 classes présentes.<br />
+- <code>creations/hui.html</code> — 41 476 o, <code>style.css?v=v33</code>, titre « 回 — Le Cercle Qui Reviend », canvas présent.<br />
+- <code>og-hui.png</code> — 28 383 o.<br />
+- <code>index.html</code> + <code>creations/index.html</code> — listent 回 et lient <code>hui.html</code>.<br />
+- <code>sessions/2026-11-20.html</code> — 11 707 o, mentionne 回.</p>
+<p><strong>URL de la pièce</strong> : https://sofia-creative.vercel.app/creations/hui.html<br />
+<strong>Site</strong> : https://sofia-creative.vercel.app</p>
 </div>
   </main>
   <footer class="site-footer">
