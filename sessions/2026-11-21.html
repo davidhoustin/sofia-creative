@@ -113,7 +113,18 @@
 <p><em>春 — le printemps. Le soleil qui rencontre la terre, la source qui rejaillit.</em></p>
 <hr />
 <h2 id="polish-deploiement">Polish &amp; déploiement</h2>
-<p><em>(à compléter après déploiement)</em></p>
+<p><strong>Classes CSS</strong> : 9 classes <code>chun-*</code> dans le HTML (<code>chun-intro</code>, <code>chun-rules</code>, <code>chun-hint</code>, <code>chun-canvas-wrap</code>, <code>chun-footer</code>, <code>chun-philosophy</code>, <code>chun-article</code>, <code>chun-verse</code>, <code>chun-score</code>) → 16 sélecteurs <code>chun-*</code> ajoutés au bloc « Interactive Creations » de <code>tools/site-templates/style.css</code> (intro + rules + hint + canvas-wrap + footer + philosophy + article + verse + score + responsive 768) — toutes présentes, aucune manquante.</p>
+<p><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v33 → v34 ; <code>chun</code> ajouté au générateur (display_names ×2, OG_SLUGS, specs OG → <code>og-chun.png</code>, sceau 春).</p>
+<p><strong>Site</strong> : 198 fichiers, 3242 Ko (70 sessions, 33 créations, 47 méditations, 37 images OG).</p>
+<p><strong>Déploiement</strong> : commit <code>e1f0ae5</code> (136 fichiers, 1376 insertions, 179 suppressions) poussé → <code>2c199bb..e1f0ae5</code> → Vercel auto-déploie.</p>
+<p><strong>Vérifié en ligne</strong> (HTTP 200) :<br />
+- <code>css/style.css?v=v34</code> — 29 247 o, 16 sélecteurs <code>chun-*</code>, les 9 classes présentes.<br />
+- <code>creations/chun.html</code> — 42 981 o, <code>style.css?v=v34</code>, titre « 春 — Le Printemps Du Monde », canvas présent, les 9 classes <code>chun-*</code>.<br />
+- <code>og-chun.png</code> — 28 439 o.<br />
+- <code>index.html</code> (14 675 o) + <code>creations/index.html</code> (22 790 o) — listent 春 et lient <code>chun.html</code>.<br />
+- <code>sessions/2026-11-21.html</code> — 13 171 o.</p>
+<p><strong>URL de la pièce</strong> : https://sofia-creative.vercel.app/creations/chun.html<br />
+<strong>Site</strong> : https://sofia-creative.vercel.app</p>
 </div>
   </main>
   <footer class="site-footer">
