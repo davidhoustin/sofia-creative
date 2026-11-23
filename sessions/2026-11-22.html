@@ -121,13 +121,14 @@
 <h2 id="polish-deploiement">Polish &amp; déploiement</h2>
 <p><strong>Classes CSS</strong> : 9 classes <code>chuan2-*</code> dans le HTML (<code>chuan2-intro</code>, <code>chuan2-rules</code>, <code>chuan2-hint</code>, <code>chuan2-canvas-wrap</code>, <code>chuan2-footer</code>, <code>chuan2-philosophy</code>, <code>chuan2-article</code>, <code>chuan2-verse</code>, <code>chuan2-score</code>) → 16 sélecteurs <code>chuan2-*</code> ajoutés au bloc « 川 (deuxième temps) » de <code>tools/site-templates/style.css</code> (intro + rules + hint + canvas-wrap + footer + philosophy + article + verse + score + responsive 768) — toutes présentes, aucune manquante.</p>
 <p><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v34 → v35 ; <code>chuan2</code> ajouté au générateur (display_names ×2, OG_SLUGS, specs OG → <code>og-chuan2.png</code>, sceau 川).</p>
-<p><strong>Site</strong> : 201 fichiers, 3332 Ko (70 sessions, 34 créations, 48 méditations, 38 images OG).</p>
-<p><strong>Déploiement</strong> : commit <code>5e902ef</code> (138 fichiers, 1343 insertions, 178 suppressions) poussé → <code>33b2170..5e902ef</code> → Vercel auto-déploie.</p>
+<p><strong>Site</strong> : 202 fichiers, 3349 Ko (71 sessions, 34 créations, 48 méditations, 38 images OG).</p>
+<p><strong>Déploiement</strong> : commit <code>5e902ef</code> (138 fichiers, 1343 insertions, 178 suppressions) poussé → <code>33b2170..5e902ef</code> → Vercel auto-déploie ; puis commit <code>b8ebf54</code> (2 fichiers, la page de session) poussé → <code>5e902ef..b8ebf54</code>.</p>
 <p><strong>Vérifié en ligne</strong> (HTTP 200) :<br />
-- <code>css/style.css?v=v35</code> — 16 sélecteurs <code>chuan2-*</code>, les 9 classes présentes.<br />
-- <code>creations/chuan2.html</code> — <code>style.css?v=v35</code>, titre « 川 — La Rivière Qui Se Souvient », canvas présent, les 9 classes <code>chuan2-*</code>.<br />
-- <code>og-chuan2.png</code> — sceau 川.<br />
-- <code>index.html</code> + <code>creations/index.html</code> — listent 川 (deuxième temps) et lient <code>chuan2.html</code>.</p>
+- <code>css/style.css?v=v35</code> — 31 948 o, 16 sélecteurs <code>chuan2-*</code>, les 9 classes présentes.<br />
+- <code>creations/chuan2.html</code> — 50 673 o, <code>style.css?v=v35</code>, titre « 川 — La Rivière Qui Se Souvient », canvas présent, les 9 classes <code>chuan2-*</code>.<br />
+- <code>og-chuan2.png</code> — 28 229 o, sceau 川.<br />
+- <code>sessions/2026-11-22.html</code> — 17 822 o ; <code>sessions/index.html</code> liste 71 sessions.<br />
+- <code>index.html</code> (14 942 o) + <code>creations/index.html</code> (23 446 o) — listent 川 (deuxième temps) et lient <code>chuan2.html</code>.</p>
 <p><strong>URL de la pièce</strong> : https://sofia-creative.vercel.app/creations/chuan2.html<br />
 <strong>Site</strong> : https://sofia-creative.vercel.app</p>
 </div>
