@@ -122,6 +122,19 @@
 <p><strong>Vingt-et-un temps. Un champ qui se souvient — un monde qui porte le fruit.</strong></p>
 <hr />
 <p><em>田 — le champ. Le premier fruit qui revient de la terre, la mémoire qui redonne plus abondamment.</em></p>
+<hr />
+<h2 id="polish-deploiement">Polish &amp; déploiement</h2>
+<p><strong>Classes CSS</strong> : 9 classes <code>tian2-*</code> dans le HTML (<code>tian2-intro</code>, <code>tian2-rules</code>, <code>tian2-hint</code>, <code>tian2-canvas-wrap</code>, <code>tian2-footer</code>, <code>tian2-philosophy</code>, <code>tian2-article</code>, <code>tian2-verse</code>, <code>tian2-score</code>) → 16 sélecteurs <code>tian2-*</code> ajoutés au bloc « 田 (deuxième temps) » de <code>tools/site-templates/style.css</code> (intro + rules + hint + canvas-wrap + footer + philosophy + article + verse + score + responsive 768) — toutes présentes, aucune manquante.</p>
+<p><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v35 → v36 ; <code>tian2</code> ajouté au générateur (display_names ×2, OG_SLUGS, specs OG → <code>og-tian2.png</code>, sceau 田).</p>
+<p><strong>Site</strong> : 206 fichiers, 3458 Ko (72 sessions, 35 créations, 49 méditations, 39 images OG).</p>
+<p><strong>Déploiement</strong> : commit <code>ae388c6</code> (142 fichiers, 1504 insertions, 187 suppressions) poussé → <code>80c9c6f..ae388c6</code> → Vercel auto-déploie.</p>
+<p><strong>Vérifié en ligne</strong> (HTTP 200) :<br />
+- <code>css/style.css?v=v36</code> — 33 576 o, 16 sélecteurs <code>tian2-*</code>, les 9 classes présentes.<br />
+- <code>creations/tian2.html</code> — 52 295 o, <code>style.css?v=v36</code>, titre « 田 — Le Champ Qui Se Souvient », canvas présent, les 9 classes <code>tian2-*</code>.<br />
+- <code>og-tian2.png</code> — 28 060 o, sceau 田.<br />
+- <code>index.html</code> (15 219 o) + <code>creations/index.html</code> (24 095 o) — listent 田 (deuxième temps) et lient <code>tian2.html</code>.</p>
+<p><strong>URL de la pièce</strong> : https://sofia-creative.vercel.app/creations/tian2.html<br />
+<strong>Site</strong> : https://sofia-creative.vercel.app</p>
 </div>
   </main>
   <footer class="site-footer">
