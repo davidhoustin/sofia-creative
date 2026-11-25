@@ -123,6 +123,20 @@
 <p><strong>Vingt-deux temps. Un ciel qui retombe — un monde qui se souvient de la première lumière.</strong></p>
 <hr />
 <p><em>天 — le ciel. La première lumière revenue du ciel, la mémoire qui retombe plus richement.</em></p>
+<hr />
+<h2 id="polish-deploiement">Polish &amp; déploiement</h2>
+<p><strong>Classes CSS</strong> : 9 classes <code>ciel2-*</code> dans le HTML (<code>ciel2-intro</code>, <code>ciel2-rules</code>, <code>ciel2-hint</code>, <code>ciel2-canvas-wrap</code>, <code>ciel2-footer</code>, <code>ciel2-philosophy</code>, <code>ciel2-article</code>, <code>ciel2-verse</code>, <code>ciel2-score</code>) → 16 sélecteurs <code>ciel2-*</code> ajoutés au bloc « 天 (deuxième temps) » de <code>tools/site-templates/style.css</code> (intro + rules + hint + canvas-wrap + footer + philosophy + article + verse + score + responsive 768) — toutes présentes, aucune manquante.</p>
+<p><strong>Cache-busting</strong> : <code>CSS_CACHE</code> v36 → v37 ; <code>ciel2</code> ajouté au générateur (display_names ×2, OG_SLUGS, specs OG → <code>og-ciel2.png</code>, sceau 天).</p>
+<p><strong>Site</strong> : 210 fichiers, 3578 Ko (73 sessions, 36 créations, 50 méditations, 40 images OG).</p>
+<p><strong>Déploiement</strong> : commit <code>840498e</code> (145 fichiers, 1845 insertions, 191 suppressions) poussé → <code>cecd97f..840498e</code> → Vercel auto-déploie.</p>
+<p><strong>Vérifié en ligne</strong> (HTTP 200) :<br />
+- <code>css/style.css</code> — 34 094 o, 16 sélecteurs <code>ciel2-*</code>, les 9 classes présentes.<br />
+- <code>creations/ciel2.html</code> — 63 496 o, <code>style.css?v=v37</code>, titre « 天 — Le Ciel Qui Retombe », canvas présent, les 9 classes <code>ciel2-*</code>.<br />
+- <code>og-ciel2.png</code> — 27 118 o, sceau 天.<br />
+- <code>index.html</code> + <code>creations/index.html</code> — listent 天 (deuxième temps) et lient <code>ciel2.html</code>.</p>
+<p><strong>Test visuel &amp; fonctionnel</strong> (navigateur Chromium local, serveur <code>http.server</code>) : le canvas <em>rend</em> (4900 échantillons non vides, luminosité moyenne 219) ; un <em>appui</em> (clic simulé) <em>fait tomber la lumière</em> et <em>met à jour</em> le statut (« L'été. Le monde est arrosé, le ciel retombe. ») + la philosophie (« 天. Le ciel qui se souvient. ») ; la séquence « fin » (Échap) <em>s'exécute</em> proprement — statut final « Le ciel s'est souvenu de tout. La lumière retombe — le monde se souvient de la première lumière. », philosophie « 天. Le ciel qui retombe — le monde se souvient. », image finale <em>rendue</em> (ciel bleu, dôme, soleil, source, rivière, champ, rayons). Synthex JS <em>validé</em> (<code>node --check</code>, après renommer la primitive <code>fall</code> → <code>fallNote</code> qui <em>collidait</em> avec l'état <code>fall</code>).</p>
+<p><strong>URL de la pièce</strong> : https://sofia-creative.vercel.app/creations/ciel2.html<br />
+<strong>Site</strong> : https://sofia-creative.vercel.app</p>
 </div>
   </main>
   <footer class="site-footer">
