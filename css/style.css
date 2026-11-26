@@ -1862,3 +1862,100 @@ section:last-child {
     margin-top: 2rem;
   }
 }
+
+/* ─── 風 (deuxième temps) — Le Vent Qui Traverse Encore ─── */
+
+.feng2-canvas-wrap {
+  margin: 2.5rem auto;
+  padding: 14px;
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-deep);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  max-width: 740px;
+  overflow: hidden;
+}
+
+.feng2-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-sm);
+}
+
+.feng2-intro {
+  margin: 0 auto 2rem;
+  max-width: 560px;
+  text-align: center;
+  animation: fadeInUp 0.6s var(--ease-out) both;
+}
+
+.feng2-intro p {
+  margin: 0.8em 0;
+}
+
+.feng2-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.feng2-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
+.feng2-article {
+  max-width: 620px;
+  margin: 3rem auto 0;
+}
+
+.feng2-article h2 {
+  margin-top: 2.4em;
+}
+
+.feng2-article .feng2-verse {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--vermilion);
+  text-align: center;
+  margin-top: 2.5em;
+  letter-spacing: 0.1em;
+}
+
+.feng2-score li {
+  margin-bottom: 0.7em;
+}
+
+.feng2-footer {
+  margin: 2rem auto 0;
+  max-width: 560px;
+  text-align: center;
+}
+
+.feng2-footer p {
+  margin: 0.5em 0;
+}
+
+.feng2-philosophy {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 768px) {
+  .feng2-canvas-wrap {
+    padding: 10px;
+    margin: 2rem auto;
+  }
+  .feng2-intro {
+    line-height: 1.9;
+  }
+  .feng2-article {
+    margin-top: 2rem;
+  }
+}
