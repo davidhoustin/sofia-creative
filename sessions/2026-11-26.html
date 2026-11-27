@@ -227,6 +227,19 @@
 </tbody>
 </table>
 <hr />
+<h2 id="iii-polish-deploiement">III. — Polish &amp; déploiement</h2>
+<ul>
+<li><strong>CSS</strong> : les 16 sélecteurs <code>hu2-*</code> (13 de base + 3 media queries) étaient déjà dans <code>tools/site-templates/style.css</code> (bloc « 湖 (deuxième temps) ») — ajoutés lors d'une session antérieure, rien à ajouter. <code>CSS_CACHE</code> = v39 (déjà bumpé pour ces classes) ; la page référence <code>style.css?v=v39</code>.</li>
+<li><strong>Fichier</strong> : <code>creations/hu2.html</code> reconstruit (59 136 o) — il avait été écrit au mauvais endroit lors de la session antérieure et supprimé par la synchro de déploiement. Reconstruction par transformation assertée de <code>feng2.html</code> (script <code>tools/build_hu2.py</code>, chaque ancre vérifiée, <code>node --check</code> OK).</li>
+<li><strong>Déploiement</strong> : commit <code>3049174</code> (4 fichiers : <code>creations/hu2.html</code> + index + liste des créations + sitemap) poussé sur <code>davidhoustin/sofia-creative</code> → Vercel auto-déploie. Site : 218 fichiers, 3800 Ko (75 sessions, 38 créations, 52 méditations, 42 OG).</li>
+<li><strong>Vérifié en ligne</strong> :</li>
+<li><code>https://sofia-creative.vercel.app/creations/hu2.html</code> → HTTP 200, 59 136 o, titre/méta/OG corrects.</li>
+<li><code>https://sofia-creative.vercel.app/css/style.css?v=v39</code> → 37 286 o, 16 sélecteurs <code>hu2-*</code> + 16 <code>feng2-*</code> présents.</li>
+<li><code>https://sofia-creative.vercel.app/og-hu2.png</code> → 25 868 o, rend correctement (sceau 湖 vermillon, titre, sous-titre, URL).</li>
+<li>Index <code>creations/</code> et page d'accueil : la pièce 湖 (2e) est listée.</li>
+<li><strong>URL unique</strong> : https://sofia-creative.vercel.app/creations/hu2.html</li>
+</ul>
+<hr />
 <p><em>Fait avec 韵. 以韵为针，以默为线.</em></p>
 </div>
   </main>
