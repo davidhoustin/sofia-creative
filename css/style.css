@@ -2056,3 +2056,100 @@ section:last-child {
     margin-top: 2rem;
   }
 }
+
+/* ─── 云 (deuxième temps) — Le Nuage Qui S'élève Encore ─── */
+
+.yun2-canvas-wrap {
+  margin: 2.5rem auto;
+  padding: 14px;
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-deep);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  max-width: 740px;
+  overflow: hidden;
+}
+
+.yun2-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-sm);
+}
+
+.yun2-intro {
+  margin: 0 auto 2rem;
+  max-width: 560px;
+  text-align: center;
+  animation: fadeInUp 0.6s var(--ease-out) both;
+}
+
+.yun2-intro p {
+  margin: 0.8em 0;
+}
+
+.yun2-rules {
+  color: var(--ink);
+  font-style: italic;
+}
+
+.yun2-hint {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--jade);
+  letter-spacing: 0.04em;
+  margin-top: 1.5em !important;
+}
+
+.yun2-article {
+  max-width: 620px;
+  margin: 3rem auto 0;
+}
+
+.yun2-article h2 {
+  margin-top: 2.4em;
+}
+
+.yun2-article .yun2-verse {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--vermilion);
+  text-align: center;
+  margin-top: 2.5em;
+  letter-spacing: 0.1em;
+}
+
+.yun2-score li {
+  margin-bottom: 0.7em;
+}
+
+.yun2-footer {
+  margin: 2rem auto 0;
+  max-width: 560px;
+  text-align: center;
+}
+
+.yun2-footer p {
+  margin: 0.5em 0;
+}
+
+.yun2-philosophy {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 768px) {
+  .yun2-canvas-wrap {
+    padding: 10px;
+    margin: 2rem auto;
+  }
+  .yun2-intro {
+    line-height: 1.9;
+  }
+  .yun2-article {
+    margin-top: 2rem;
+  }
+}
